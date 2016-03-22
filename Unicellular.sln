@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unicellular.DataAccess", "Unicellular.DataAccess\Unicellular.DataAccess.csproj", "{E0F7CA7C-9D62-439A-B998-B7D59B3173B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unicellular.Test", "Unicellular.Test\Unicellular.Test.csproj", "{25E9103E-D9B9-4156-9587-CB42C197D4EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unicellular.ORM", "Unicellular.ORM\Unicellular.ORM.csproj", "{B34C9855-44D9-43B6-B69F-E068C8E390B3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unicellular.Freamework", "Unicellular.Freamework", "{65ED757F-AB90-4012-8419-AE02F329358B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XLToolLibrary", "..\XLToolLibrary\XLToolLibrary\XLToolLibrary\XLToolLibrary.csproj", "{AA0865DE-B6D0-4FC6-AF67-9FA4E968ACAD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E0F7CA7C-9D62-439A-B998-B7D59B3173B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0F7CA7C-9D62-439A-B998-B7D59B3173B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0F7CA7C-9D62-439A-B998-B7D59B3173B5}.Debug|x64.ActiveCfg = Debug|x64
+		{E0F7CA7C-9D62-439A-B998-B7D59B3173B5}.Debug|x64.Build.0 = Debug|x64
+		{E0F7CA7C-9D62-439A-B998-B7D59B3173B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0F7CA7C-9D62-439A-B998-B7D59B3173B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0F7CA7C-9D62-439A-B998-B7D59B3173B5}.Release|x64.ActiveCfg = Release|x64
+		{E0F7CA7C-9D62-439A-B998-B7D59B3173B5}.Release|x64.Build.0 = Release|x64
+		{25E9103E-D9B9-4156-9587-CB42C197D4EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25E9103E-D9B9-4156-9587-CB42C197D4EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25E9103E-D9B9-4156-9587-CB42C197D4EA}.Debug|x64.ActiveCfg = Debug|x64
+		{25E9103E-D9B9-4156-9587-CB42C197D4EA}.Debug|x64.Build.0 = Debug|x64
+		{25E9103E-D9B9-4156-9587-CB42C197D4EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25E9103E-D9B9-4156-9587-CB42C197D4EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25E9103E-D9B9-4156-9587-CB42C197D4EA}.Release|x64.ActiveCfg = Release|x64
+		{25E9103E-D9B9-4156-9587-CB42C197D4EA}.Release|x64.Build.0 = Release|x64
+		{B34C9855-44D9-43B6-B69F-E068C8E390B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B34C9855-44D9-43B6-B69F-E068C8E390B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B34C9855-44D9-43B6-B69F-E068C8E390B3}.Debug|x64.ActiveCfg = Debug|x64
+		{B34C9855-44D9-43B6-B69F-E068C8E390B3}.Debug|x64.Build.0 = Debug|x64
+		{B34C9855-44D9-43B6-B69F-E068C8E390B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B34C9855-44D9-43B6-B69F-E068C8E390B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B34C9855-44D9-43B6-B69F-E068C8E390B3}.Release|x64.ActiveCfg = Release|x64
+		{B34C9855-44D9-43B6-B69F-E068C8E390B3}.Release|x64.Build.0 = Release|x64
+		{AA0865DE-B6D0-4FC6-AF67-9FA4E968ACAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA0865DE-B6D0-4FC6-AF67-9FA4E968ACAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA0865DE-B6D0-4FC6-AF67-9FA4E968ACAD}.Debug|x64.ActiveCfg = Debug|x64
+		{AA0865DE-B6D0-4FC6-AF67-9FA4E968ACAD}.Debug|x64.Build.0 = Debug|x64
+		{AA0865DE-B6D0-4FC6-AF67-9FA4E968ACAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA0865DE-B6D0-4FC6-AF67-9FA4E968ACAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA0865DE-B6D0-4FC6-AF67-9FA4E968ACAD}.Release|x64.ActiveCfg = Release|x64
+		{AA0865DE-B6D0-4FC6-AF67-9FA4E968ACAD}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E0F7CA7C-9D62-439A-B998-B7D59B3173B5} = {65ED757F-AB90-4012-8419-AE02F329358B}
+		{B34C9855-44D9-43B6-B69F-E068C8E390B3} = {65ED757F-AB90-4012-8419-AE02F329358B}
+		{AA0865DE-B6D0-4FC6-AF67-9FA4E968ACAD} = {65ED757F-AB90-4012-8419-AE02F329358B}
+	EndGlobalSection
+EndGlobal
