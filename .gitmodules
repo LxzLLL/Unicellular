@@ -1,0 +1,3 @@
+[submodule "XLToolLibrary"]
+	path = XLToolLibrary
+	url = ../XLToolLibrary
