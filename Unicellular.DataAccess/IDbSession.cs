@@ -25,13 +25,7 @@ namespace Unicellular.DataAccess
 
         public DatabaseType DatabaseType { get; private set; }
 
-        public string ConnKey { get; set; }
-
-        public Database(IDbConnection connection)
-        {
-            Connection = connection;
-        }
-
+        public string ConnKey { get; private set; }
 
         public Database(DatabaseType dbType, string connKey)
         {
@@ -44,16 +38,39 @@ namespace Unicellular.DataAccess
 
 
     /// <summary>
-    /// 数据连接事务的Session接口
+    /// 数据连接事务的Session接口，针对DapperExtension
     /// </summary>
     public interface IDBSession : IDisposable
     {
+        /// <summary>
+        /// 链接字符串key值
+        /// </summary>
         string ConnKey { get; }
+        /// <summary>
+        /// 数据库类型
+        /// </summary>
         DatabaseType DatabaseType { get; }
+        /// <summary>
+        /// 数据库链接
+        /// </summary>
         IDbConnection Connection { get; }
+        /// <summary>
+        /// 数据库事务
+        /// </summary>
         IDbTransaction Transaction { get; }
+        /// <summary>
+        /// 事务开始
+        /// </summary>
+        /// <param name="isolation">事务级别</param>
+        /// <returns></returns>
         IDbTransaction Begin(IsolationLevel isolation = IsolationLevel.ReadCommitted);
+        /// <summary>
+        /// 事务提交
+        /// </summary>
         void Commit();
+        /// <summary>
+        /// 事务回滚
+        /// </summary>
         void Rollback();
     }
 }

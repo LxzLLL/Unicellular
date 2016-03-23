@@ -16,7 +16,6 @@ namespace Unicellular.ORM
         IEnumerable<T> GetByIds<T>( IList<dynamic> ids ) where T : class;
         IEnumerable<T> GetAll<T>() where T : class;
 
-
         int Count<T>( object predicate, bool buffered = false ) where T : class;
 
         //lsit

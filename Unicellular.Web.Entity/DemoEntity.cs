@@ -1,5 +1,4 @@
 ﻿using System;
-
 using DapperExtensions.Mapper;
 
 namespace Unicellular.Web.Entity
@@ -7,7 +6,6 @@ namespace Unicellular.Web.Entity
     public class DemoEntity
     {
         public int ID { get; set; }
-
         public string Name { get; set; }
     }
 

@@ -97,6 +97,14 @@ namespace DapperExtensions
                                 _instance = InstanceFactory(new DapperExtensionsConfiguration(typeof(AutoClassMapper<>), new List<Assembly>(), new MySqlDialect()));
                                 _instanceList.Add(databaseType, _instance);
                                 break;
+                            case DatabaseType.Sqlite:
+                                _instance = InstanceFactory( new DapperExtensionsConfiguration( typeof( AutoClassMapper<> ), new List<Assembly>(), new SqliteDialect() ) );
+                                _instanceList.Add( databaseType, _instance );
+                                break;
+                            case DatabaseType.Postgresql:
+                                _instance = InstanceFactory( new DapperExtensionsConfiguration( typeof( AutoClassMapper<> ), new List<Assembly>(), new PostgreSqlDialect() ) );
+                                _instanceList.Add( databaseType, _instance );
+                                break;
                             default:
                                 _instance = InstanceFactory(new DapperExtensionsConfiguration(typeof(AutoClassMapper<>), new List<Assembly>(), new SqlServerDialect()));
                                 _instanceList.Add(databaseType, _instance);

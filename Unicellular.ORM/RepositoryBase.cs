@@ -21,13 +21,10 @@ namespace Unicellular.ORM
             base.SetDBSession( dbSession );
         }
 
-
         public RepositoryBase( IDBSession dbSession )
             : base( dbSession )
         {
         }
-
-
 
         /// <summary>
         /// 根据条件筛选出数据集合
@@ -39,7 +36,6 @@ namespace Unicellular.ORM
         /// <returns></returns>
         public IEnumerable<T> Get<T>( string sql, dynamic param = null, bool buffered = true ) where T : class
         {
-
             return DBSession.Connection.Query<T>( sql, param as object, DBSession.Transaction, buffered );
         }
 

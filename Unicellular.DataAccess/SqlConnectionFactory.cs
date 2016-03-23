@@ -13,7 +13,8 @@ namespace Unicellular.DataAccess
         MySql,
         Oracle,
         DB2,
-        Sqlite
+        Sqlite,
+        Postgresql
     }
     
     public class SqlConnectionFactory
@@ -33,7 +34,7 @@ namespace Unicellular.DataAccess
                     break;
                 case DatabaseType.MySql:
                     //connection = new MySql.Data.MySqlClient.MySqlConnection(strConn);
-                    //break;
+                    break;
                 case DatabaseType.Oracle:
                     connection = new Oracle.DataAccess.Client.OracleConnection(strConn);
                     //connection = new System.Data.OracleClient.OracleConnection(strConn);
@@ -43,6 +44,9 @@ namespace Unicellular.DataAccess
                     break;
                 case DatabaseType.Sqlite:
                     connection = new System.Data.SQLite.SQLiteConnection( strConn );
+                    break;
+                case DatabaseType.Postgresql:
+                    //connection = new System.Data.SQLite.SQLiteConnection( strConn );
                     break;
             }
             return connection;
