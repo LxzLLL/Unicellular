@@ -6,9 +6,8 @@ namespace Unicellular.DataAccess
     /// <summary>
     /// 提供对数据库的基本操作，连接字符串需要在数据库配置。
     /// </summary>
-    public interface IDBHelper
+    public interface IDBAdaptor
     {
-
         /// <summary>
         /// 生成分页SQL语句
         /// </summary>
@@ -20,19 +19,11 @@ namespace Unicellular.DataAccess
         /// <returns></returns>
         string GetPagingSql(int pageIndex, int pageSize, string selectSql, string sqlCount, string orderBy);
 
-
         /// <summary>
         /// 开始一个事务
         /// </summary>
         /// <returns></returns>
         DbTransaction BeginTractionand();
-
-
-        /// <summary>
-        /// 开始一个事务
-        /// </summary>
-        /// <param name="connKey">数据库连接字符key</param>
-        DbTransaction BeginTractionand(string connKey);
 
         /// <summary>
         /// 回滚事务
@@ -46,9 +37,6 @@ namespace Unicellular.DataAccess
         /// <param name="dbTransaction">要结束的事务</param>
         void CommitTractionand(DbTransaction dbTransaction);
 
-
-
-
         #region DataSet
 
         /// <summary>
@@ -57,14 +45,6 @@ namespace Unicellular.DataAccess
         /// <param name="commandText">sql语句</param>
         /// <param name="commandType"></param>
         DataSet ExecuteDataSet(string commandText, CommandType commandType);
-
-        /// <summary>
-        /// 执行sql语句,ExecuteDataSet 返回DataSet
-        /// </summary>
-        /// <param name="connKey">数据库连接字符key</param>
-        /// <param name="commandText">sql语句</param>
-        /// <param name="commandType"></param>
-        DataSet ExecuteDataSet(string connKey, string commandText, CommandType commandType);
 
 
         /// <summary>
@@ -75,20 +55,9 @@ namespace Unicellular.DataAccess
         /// <param name="parameterValues">参数</param>
         DataSet ExecuteDataSet(string commandText, CommandType commandType, params DbParameter[] parameterValues);
 
-        /// <summary>
-        /// 执行sql语句,ExecuteDataSet 返回DataSet
-        /// </summary>
-        /// <param name="connKey">数据库连接字符key</param>
-        /// <param name="commandText">sql语句</param>
-        /// <param name="commandType"></param>
-        /// <param name="parameterValues">参数</param>
-        DataSet ExecuteDataSet(string connKey, string commandText, CommandType commandType, params DbParameter[] parameterValues);
-
 
 
         #endregion
-
-
 
         #region ExecuteNonQuery
 
@@ -98,14 +67,6 @@ namespace Unicellular.DataAccess
         /// <param name="commandText">sql语句</param>
         /// <param name="commandType"></param>
         int ExecuteNonQuery(string commandText, CommandType commandType);
-
-        /// <summary>
-        /// 执行sql语句,返回影响的行数
-        /// </summary>
-        /// <param name="connKey">数据库连接字符key</param>
-        /// <param name="commandText">sql语句</param>
-        /// <param name="commandType"></param>
-        int ExecuteNonQuery(string connKey, string commandText, CommandType commandType);
 
         /// <summary>
         /// 执行sql语句,返回影响的行数
@@ -126,15 +87,6 @@ namespace Unicellular.DataAccess
         /// <summary>
         /// 执行sql语句,返回影响的行数
         /// </summary>
-        /// <param name="connKey">数据库连接字符key</param>
-        /// <param name="commandText">sql语句</param>
-        /// <param name="commandType"></param>
-        /// <param name="parameterValues">参数</param>
-        int ExecuteNonQuery(string connKey, string commandText, CommandType commandType, params DbParameter[] parameterValues);
-
-        /// <summary>
-        /// 执行sql语句,返回影响的行数
-        /// </summary>
         /// <param name="trans">事务对象</param>
         /// <param name="commandText">sql语句</param>
         /// <param name="commandType"></param>
@@ -142,10 +94,6 @@ namespace Unicellular.DataAccess
         int ExecuteNonQuery(DbTransaction trans, string commandText, CommandType commandType, params DbParameter[] parameterValues);
 
         #endregion
-
-
-
-
 
         #region IDataReader
 
@@ -164,25 +112,7 @@ namespace Unicellular.DataAccess
         /// <param name="parameterValues">参数</param>
         IDataReader ExecuteReader(string commandText, CommandType commandType, params DbParameter[] parameterValues);
 
-        /// <summary>
-        /// 执行sql语句,ExecuteReader 返回IDataReader
-        /// </summary>
-        /// <param name="connKey">数据库连接字符key</param>        
-        /// <param name="commandText">sql语句</param>
-        /// <param name="commandType"></param>
-        IDataReader ExecuteReader(string connKey, string commandText, CommandType commandType);
-
-        /// <summary>
-        /// 执行sql语句,ExecuteReader 返回IDataReader
-        /// </summary>
-        /// <param name="connKey">数据库连接字符key</param>        
-        /// <param name="commandText">sql语句</param>
-        /// <param name="commandType"></param>
-        /// <param name="parameterValues">参数</param>
-        IDataReader ExecuteReader(string connKey, string commandText, CommandType commandType, params DbParameter[] parameterValues);
-
         #endregion
-
 
         #region ExecuteScalar
 
@@ -213,24 +143,6 @@ namespace Unicellular.DataAccess
         /// <summary>
         /// 执行sql语句,ExecuteScalar 返回第一行第一列的值
         /// </summary>
-        /// <param name="connKey">数据库连接字符key</param>
-        /// <param name="commandText">sql语句</param>
-        /// <param name="commandType"></param>
-        object ExecuteScalar(string connKey, string commandText, CommandType commandType);
-
-
-        /// <summary>
-        /// 执行sql语句,ExecuteScalar 返回第一行第一列的值
-        /// </summary>
-        /// <param name="connKey">数据库连接字符key</param>
-        /// <param name="commandText">sql语句</param>
-        /// <param name="commandType"></param>
-        /// <param name="parameterValues">参数</param>
-        object ExecuteScalar(string connKey, string commandText, CommandType commandType, params DbParameter[] parameterValues);
-
-        /// <summary>
-        /// 执行sql语句,ExecuteScalar 返回第一行第一列的值
-        /// </summary>
         /// <param name="trans">事务</param>
         /// <param name="commandText">sql语句</param>
         /// <param name="commandType"></param>
@@ -238,8 +150,5 @@ namespace Unicellular.DataAccess
         /// <returns></returns>
         object ExecuteScalar(DbTransaction trans, string commandText, CommandType commandType, params DbParameter[] parameterValues);
         #endregion
-
-
-
     }
 }

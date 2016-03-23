@@ -1,104 +1,56 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Common;
 //using System.Data.OracleClient;
 using Oracle.DataAccess.Client;
-using System.Linq;
-using System.Text;
 
 namespace Unicellular.DataAccess.OracleDBHelper
 {
-    public class OracleAdaptor : IDBHelper
+    public class OracleAdaptor : IDBAdaptor
     {
+        private OracleConnection _connection;
 
-
-  private static string _ConnectionStringKey = "DefaultConnection";
-
-  public OracleAdaptor(string connKey)
+        public OracleAdaptor( IDbConnection connection )
         {
-            _ConnectionStringKey = connKey;
-        }
-
-
-        /// <summary>
-        /// 取得数据库连接
-        /// </summary>
-        /// <param name="DBKey">数据库连接主键</param>
-        /// <returns></returns>
-        public static OracleConnection GetConnByKey(string connectionStringKey)
-        {
-            ConnectionStringSettings css = ConfigurationManager.ConnectionStrings[connectionStringKey];
-            string constr = css.ConnectionString;
-            OracleConnection con = new OracleConnection(constr);
-            return con;
+            _connection = (OracleConnection)connection;
         }
 
         #region 事务
-
-
-
         /// <summary>
         /// 开始一个事务
         /// </summary>
         public DbTransaction BeginTractionand()
         {
-            OracleConnection con = GetConnByKey(_ConnectionStringKey);
-            DbTransaction transaction = OracleHelper.BeginTransaction(con);
-            return transaction;
-        }
-
-        /// <summary>
-        /// 开始一个事务
-        /// </summary>
-        public DbTransaction BeginTractionand(string connKey)
-        {
-            OracleConnection con = GetConnByKey(connKey);
-            DbTransaction transaction = OracleHelper.BeginTransaction(con);
+            DbTransaction transaction = OracleHelper.BeginTransaction(this._connection);
             return transaction;
         }
 
         /// <summary>
         /// 回滚事务
         /// </summary>
-        public void RollbackTractionand(DbTransaction dbTransaction)
+        public void RollbackTractionand( DbTransaction dbTransaction )
         {
-            OracleHelper.endTransactionRollback(dbTransaction);
+            OracleHelper.endTransactionRollback( (OracleTransaction)dbTransaction );
         }
 
         /// <summary>
         /// 结束并确认事务
         /// </summary>
-        public void CommitTractionand(DbTransaction dbTransaction)
+        public void CommitTractionand( DbTransaction dbTransaction )
         {
-            OracleHelper.endTransactionCommit(dbTransaction);
+            OracleHelper.endTransactionCommit( ( OracleTransaction )dbTransaction );
         }
         #endregion
 
         #region DataSet
-
-
         /// <summary>
         /// 执行sql语句,ExecuteDataSet 返回DataSet
         /// </summary>
         /// <param name="commandText">sql语句</param>
-        public DataSet ExecuteDataSet(string commandText, CommandType commandType)
+        public DataSet ExecuteDataSet( string commandText, CommandType commandType )
         {
-            OracleConnection con =GetConnByKey(_ConnectionStringKey);
-            DataSet ds = OracleHelper.ExecuteDataset(con, commandType, commandText);
-            return ds;
-        }
-
-        /// <summary>
-        /// 执行sql语句,ExecuteDataSet 返回DataSet
-        /// </summary>
-        /// <param name="connectionStringKey">数据库连接字符串的Key</param>
-        /// <param name="commandText">sql语句</param>
-        public DataSet ExecuteDataSet(string connKey, string commandText, CommandType commandType)
-        {
-            OracleConnection con = GetConnByKey(connKey);
-            DataSet ds = OracleHelper.ExecuteDataset(con, commandType, commandText);
+            DataSet ds = OracleHelper.ExecuteDataset(this._connection, commandType, commandText);
             return ds;
         }
 
@@ -107,66 +59,32 @@ namespace Unicellular.DataAccess.OracleDBHelper
         /// </summary>
         /// <param name="commandText">sql语句</param>
         /// <param name="parameterValues">参数</param>
-        public DataSet ExecuteDataSet(string commandText, CommandType commandType, params DbParameter[] parameterValues)
+        public DataSet ExecuteDataSet( string commandText, CommandType commandType, params DbParameter[ ] parameterValues )
         {
-            OracleConnection con = GetConnByKey(_ConnectionStringKey);
-            DataSet ds = OracleHelper.ExecuteDataset(con, commandType, commandText, parameterValues);
+            DataSet ds = OracleHelper.ExecuteDataset(this._connection, commandType, commandText, (OracleParameter[])parameterValues);
             return ds;
         }
-
-        /// <summary>
-        /// 执行sql语句,ExecuteDataSet 返回DataSet
-        /// </summary>
-        /// <param name="connectionStringKey">数据库连接字符串的Key</param>
-        /// <param name="commandText">sql语句</param>
-        /// <param name="parameterValues">参数</param>
-        public DataSet ExecuteDataSet(string connKey, string commandText, CommandType commandType, params DbParameter[] parameterValues)
-        {
-            OracleConnection con = GetConnByKey(connKey);
-            DataSet ds = OracleHelper.ExecuteDataset(con, commandType, commandText, parameterValues);
-            return ds;
-        }
-
-
         #endregion
 
         #region ExecuteNonQuery
-
-
         /// <summary>
         /// 执行sql语句,返回影响的行数
         /// </summary>
         /// <param name="commandText">sql语句</param>
-        public int ExecuteNonQuery(string commandText, CommandType commandType)
+        public int ExecuteNonQuery( string commandText, CommandType commandType )
         {
-            OracleConnection con = GetConnByKey(_ConnectionStringKey);
-            int result = OracleHelper.ExecuteNonQuery(con, commandType, commandText);
+            int result = OracleHelper.ExecuteNonQuery(this._connection, commandType, commandText);
             return result;
         }
-
-        /// <summary>
-        /// 执行sql语句,返回影响的行数
-        /// </summary>
-        /// <param name="connectionStringKey">数据库连接字符串的Key</param>
-        /// <param name="commandText">sql语句</param>
-        public int ExecuteNonQuery(string connKey, string commandText, CommandType commandType)
-        {
-            OracleConnection con = GetConnByKey(connKey);
-            int result = OracleHelper.ExecuteNonQuery(con, commandType, commandText);
-            return result;
-        }
-
-
-
 
         /// <summary>
         /// 执行sql语句,返回影响的行数
         /// </summary>
         /// <param name="trans">事务对象</param>
         /// <param name="commandText">sql语句</param>
-        public int ExecuteNonQuery(DbTransaction trans, string commandText, CommandType commandType)
+        public int ExecuteNonQuery( DbTransaction trans, string commandText, CommandType commandType )
         {
-            int result = OracleHelper.ExecuteNonQuery(trans, commandType, commandText);
+            int result = OracleHelper.ExecuteNonQuery((OracleTransaction)trans, commandType, commandText);
             return result;
         }
 
@@ -175,23 +93,9 @@ namespace Unicellular.DataAccess.OracleDBHelper
         /// </summary>
         /// <param name="commandText">sql语句</param>
         /// <param name="parameterValues">参数</param>
-        public int ExecuteNonQuery(string commandText, CommandType commandType, params DbParameter[] parameterValues)
+        public int ExecuteNonQuery( string commandText, CommandType commandType, params DbParameter[ ] parameterValues )
         {
-            OracleConnection con = GetConnByKey(_ConnectionStringKey);
-            int result = OracleHelper.ExecuteNonQuery(con, commandType, commandText, parameterValues);
-            return result;
-        }
-
-        /// <summary>
-        /// 执行sql语句,返回影响的行数
-        /// </summary>
-        /// <param name="connectionStringKey">数据库连接字符串的Key</param>
-        /// <param name="commandText">sql语句</param>
-        /// <param name="parameterValues">参数</param>
-        public int ExecuteNonQuery(string connKey, string commandText, CommandType commandType, params DbParameter[] parameterValues) 
-        {
-            OracleConnection con = GetConnByKey(connKey);
-            int result = OracleHelper.ExecuteNonQuery(con, commandType, commandText, parameterValues);
+            int result = OracleHelper.ExecuteNonQuery(this._connection, commandType, commandText, (OracleParameter[])parameterValues);
             return result;
         }
 
@@ -201,25 +105,21 @@ namespace Unicellular.DataAccess.OracleDBHelper
         /// <param name="trans">事务对象</param>
         /// <param name="commandText">sql语句</param>
         /// <param name="parameterValues">参数</param>
-        public int ExecuteNonQuery(DbTransaction trans, string commandText, CommandType commandType, params DbParameter[] parameterValues)
+        public int ExecuteNonQuery( DbTransaction trans, string commandText, CommandType commandType, params DbParameter[ ] parameterValues )
         {
-            int result = OracleHelper.ExecuteNonQuery(trans, commandType, commandText, parameterValues);
+            int result = OracleHelper.ExecuteNonQuery((OracleTransaction)trans, commandType, commandText, (OracleParameter[])parameterValues);
             return result;
         }
-
-
         #endregion
 
         #region IDataReader
-
         /// <summary>
         /// 执行sql语句,ExecuteReader 返回IDataReader
         /// </summary>   
         /// <param name="commandText">sql语句</param>
-        public IDataReader ExecuteReader(string commandText, CommandType commandType)
+        public IDataReader ExecuteReader( string commandText, CommandType commandType )
         {
-            OracleConnection con = GetConnByKey(_ConnectionStringKey);
-            IDataReader dr = OracleHelper.ExecuteReader(con, commandType, commandText);
+            IDataReader dr = OracleHelper.ExecuteReader(this._connection, commandType, commandText);
             return dr;
         }
 
@@ -228,40 +128,11 @@ namespace Unicellular.DataAccess.OracleDBHelper
         /// </summary> 
         /// <param name="commandText">sql语句</param>
         /// <param name="parameterValues">参数</param>
-        public IDataReader ExecuteReader(string commandText, CommandType commandType, params DbParameter[] parameterValues)
+        public IDataReader ExecuteReader( string commandText, CommandType commandType, params DbParameter[ ] parameterValues )
         {
-            OracleConnection con = GetConnByKey(_ConnectionStringKey);
-            IDataReader dr = OracleHelper.ExecuteReader(con, commandType, commandText, parameterValues);
+            IDataReader dr = OracleHelper.ExecuteReader(this._connection, commandType, commandText, (OracleParameter[])parameterValues);
             return dr;
         }
-
-        /// <summary>
-        /// 执行sql语句,ExecuteReader 返回IDataReader
-        /// </summary>
-        /// <param name="connectionStringKey">数据库连接字符串的Key</param>        
-        /// <param name="commandText">sql语句</param>
-        public IDataReader ExecuteReader(string connKey, string commandText, CommandType commandType)
-        {
-            OracleConnection con = GetConnByKey(connKey);
-            IDataReader dr = OracleHelper.ExecuteReader(con, commandType, commandText);
-            return dr;
-        }
-
-        /// <summary>
-        /// 执行sql语句,ExecuteReader 返回IDataReader
-        /// </summary>
-        /// <param name="connectionStringKey">数据库连接字符串的Key</param>        
-        /// <param name="commandText">sql语句</param>
-        /// <param name="parameterValues">参数</param>
-        public IDataReader ExecuteReader(string connKey, string commandText, CommandType commandType, params DbParameter[] parameterValues)
-        {
-            OracleConnection con = GetConnByKey(connKey);
-            IDataReader dr = OracleHelper.ExecuteReader(con, commandType, commandText, parameterValues);
-            return dr;
-        }
-
-
-
         #endregion
 
         #region ExecuteScalar
@@ -269,23 +140,20 @@ namespace Unicellular.DataAccess.OracleDBHelper
         /// 执行sql语句,ExecuteScalar 返回第一行第一列的值
         /// </summary>
         /// <param name="commandText">sql语句</param>
-        public object ExecuteScalar(string commandText, CommandType commandType)
+        public object ExecuteScalar( string commandText, CommandType commandType )
         {
-            OracleConnection con = GetConnByKey(_ConnectionStringKey);
-            object result = OracleHelper.ExecuteScalar(con, commandType, commandText);
+            object result = OracleHelper.ExecuteScalar(this._connection, commandType, commandText);
             return result;
         }
-
 
         /// <summary>
         /// 执行sql语句,ExecuteScalar 返回第一行第一列的值
         /// </summary>
         /// <param name="commandText">sql语句</param>
         /// <param name="parameterValues">参数</param>
-        public object ExecuteScalar(string commandText, CommandType commandType, params DbParameter[] parameterValues)
+        public object ExecuteScalar( string commandText, CommandType commandType, params DbParameter[ ] parameterValues )
         {
-            OracleConnection con = GetConnByKey(_ConnectionStringKey);
-            object result = OracleHelper.ExecuteScalar(con, commandType, commandText, parameterValues);
+            object result = OracleHelper.ExecuteScalar(this._connection, commandType, commandText, (OracleParameter[])parameterValues);
             return result;
         }
 
@@ -294,35 +162,9 @@ namespace Unicellular.DataAccess.OracleDBHelper
         /// </summary>
         /// <param name="trans">事务</param>
         /// <param name="commandText">sql语句</param>
-        public object ExecuteScalar(DbTransaction trans, string commandText, CommandType commandType)
+        public object ExecuteScalar( DbTransaction trans, string commandText, CommandType commandType )
         {
             object result = OracleHelper.ExecuteScalar(trans, commandType, commandText);
-            return result;
-        }
-
-        /// <summary>
-        /// 执行sql语句,ExecuteScalar 返回第一行第一列的值
-        /// </summary>
-        /// <param name="connectionStringKey">数据库连接字符串的Key</param>
-        /// <param name="commandText">sql语句</param>
-        public object ExecuteScalar(string connKey, string commandText, CommandType commandType)
-        {
-            OracleConnection con = GetConnByKey(connKey);
-            object result = OracleHelper.ExecuteScalar(con, commandType, commandText);
-            return result;
-        }
-
-
-        /// <summary>
-        /// 执行sql语句,ExecuteScalar 返回第一行第一列的值
-        /// </summary>
-        /// <param name="connectionStringKey">数据库连接字符串的Key</param>
-        /// <param name="commandText">sql语句</param>
-        /// <param name="parameterValues">参数</param>
-        public object ExecuteScalar(string connKey, string commandText, CommandType commandType, params DbParameter[] parameterValues)
-        {
-            OracleConnection con = GetConnByKey(connKey);
-            object result = OracleHelper.ExecuteScalar(con, commandType, commandText, parameterValues);
             return result;
         }
 
@@ -332,9 +174,9 @@ namespace Unicellular.DataAccess.OracleDBHelper
         /// <param name="trans">事务param>
         /// <param name="commandText">sql语句</param>
         /// <param name="parameterValues">参数</param>
-        public object ExecuteScalar(DbTransaction trans, string commandText, CommandType commandType, params DbParameter[] parameterValues)
+        public object ExecuteScalar( DbTransaction trans, string commandText, CommandType commandType, params DbParameter[ ] parameterValues )
         {
-            object result = OracleHelper.ExecuteScalar(trans, commandType, commandText, parameterValues);
+            object result = OracleHelper.ExecuteScalar((OracleTransaction)trans, commandType, commandText, (OracleParameter[])parameterValues);
             return result;
         }
 
@@ -349,9 +191,9 @@ namespace Unicellular.DataAccess.OracleDBHelper
         /// <param name="sqlCount">查询总数的语句</param>
         /// <param name="orderBy">排序</param>
         /// <returns></returns>
-        public string GetPagingSql(int pageIndex, int pageSize, string selectSql, string sqlCount, string orderBy)
+        public string GetPagingSql( int pageIndex, int pageSize, string selectSql, string sqlCount, string orderBy )
         {
-            return PageHelper.GetOraclePagingSql(pageIndex, pageSize, selectSql, sqlCount, orderBy);
+            return PageHelper.GetOraclePagingSql( pageIndex, pageSize, selectSql, sqlCount, orderBy );
         }
 
 

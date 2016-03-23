@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Unicellular.DataAccess
 {
+    /// <summary>
+    /// 功能描述：分页帮助类
+    /// 创 建 人：Arvin
+    /// 创建日期：2015-04-07
+    /// </summary>
     public class PageHelper
     {
-
-
-        #region 生成分页SQL语句
+        #region SqlServer分页
 
         /// <summary>
         /// 用于 sqlserver
@@ -40,9 +41,7 @@ namespace Unicellular.DataAccess
         }
         #endregion
 
-
-
-
+        #region Oracle分页
         /// <summary>
         /// 用于Oracle
         /// </summary>
@@ -61,22 +60,16 @@ namespace Unicellular.DataAccess
             var topLimit = toSkip + pageSize;
             var sb = new StringBuilder();
             sb.AppendLine("SELECT * FROM (");
-            sb.AppendLine("SELECT \"_ss_data_1_\".*, ROWNUM RNUM FROM (");
+            sb.AppendLine("SELECT _ss_data_1_.*, ROWNUM RNUM FROM (");
             sb.Append(selectSql.Trim().TrimEnd(';'));
-            sb.AppendLine(") \"_ss_data_1_\"");
-            sb.AppendFormat("WHERE ROWNUM <= {0}) \"_ss_data_2_\" ", topLimit);
-            sb.AppendLine("");
-            sb.AppendFormat("WHERE \"_ss_data_2_\".RNUM > {0} ", toSkip);
-            sb.AppendLine("");
-            //if (isReturnCount)
-            //{
-            //    sb.AppendLine(PageCount(sql));
-            //}
+            sb.AppendFormat( " {0}", orderBy );
+            sb.AppendLine(") _ss_data_1_ )");
+            sb.AppendFormat( "WHERE ROWNUM > {0} AND ROWNUM <= {1} ) ", toSkip,topLimit );
             return sb.ToString();
         }
+        #endregion
 
-
-
+        #region Mysql分页
         /// <summary>
         /// MySql
         /// </summary>
@@ -91,7 +84,6 @@ namespace Unicellular.DataAccess
 
             return "";
         }
-
-
+        #endregion
     }
 }

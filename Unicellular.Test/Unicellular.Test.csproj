@@ -67,6 +67,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\XLToolLibrary\XLToolLibrary\XLToolLibrary\XLToolLibrary.csproj">
+      <Project>{aa0865de-b6d0-4fc6-af67-9fa4e968acad}</Project>
+      <Name>XLToolLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

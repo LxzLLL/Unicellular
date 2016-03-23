@@ -13,13 +13,13 @@ namespace Unicellular.DataAccess
         MySql,
         Oracle,
         DB2,
-        Sqlite3
+        Sqlite
     }
     
     public class SqlConnectionFactory
     {
         /// <summary>
-        /// 获取连接
+        /// 根据数据库类型和配置文件字符串获取连接；主要针对Dapper使用
         /// </summary>
         public static IDbConnection CreateSqlConnection(DatabaseType dbType, string strKey)
         {
@@ -40,6 +40,9 @@ namespace Unicellular.DataAccess
                     break;
                 case DatabaseType.DB2:
                     connection = new System.Data.OleDb.OleDbConnection(strConn);
+                    break;
+                case DatabaseType.Sqlite:
+                    connection = new System.Data.SQLite.SQLiteConnection( strConn );
                     break;
             }
             return connection;
