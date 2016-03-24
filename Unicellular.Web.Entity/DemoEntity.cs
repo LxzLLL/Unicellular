@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Text;
+using System.Collections.Generic;
+
 using DapperExtensions.Mapper;
 
 namespace Unicellular.Web.Entity
@@ -20,4 +23,40 @@ namespace Unicellular.Web.Entity
             AutoMap();
         }
     }
+
+    public class Book
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        //public virtual List<BookReview> Reviews { get; set; }
+        public Book()
+        {
+            //Reviews = new List<BookReview>();
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat( "[{0}]------《{1}》", Id, Name ).Append(Environment.NewLine);
+            //foreach(BookReview br in Reviews )
+            //{
+            //    sb.Append( "content:"+br.ToString() ).Append(Environment.NewLine);
+            //}
+            
+            return sb.ToString();
+        }
+    }
+
+    public class BookReview
+    {
+        public int Id { get; set; }
+        public int BookId { get; set; }
+        public virtual string Content { get; set; }
+        public virtual Book AssoicationWithBook { get; set; }
+        public override string ToString()
+        {
+            return string.Format( "{0})--[{1}]\t\"{2}\"", Id, BookId, Content );
+        }
+    }
+
 }

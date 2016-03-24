@@ -27,6 +27,13 @@ namespace Unicellular.DataAccess
             IDbConnection connection = null;
             string strConn = ConfigurationManager.ConnectionStrings[strKey].ConnectionString;
 
+            //App.config配置文件要么使用xml，要么将配置写入调用此类库的config文件中
+            
+            //ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
+            //fileMap.ExeConfigFilename = Application.StartupPath + @"\Unicellular.DataAccess.dll.config";
+            //Configuration config = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
+            //return config.ConnectionStrings.ConnectionStrings[ connectionName ].ConnectionString.ToString();
+
             switch (dbType)
             {
                 case DatabaseType.SqlServer:
@@ -36,7 +43,7 @@ namespace Unicellular.DataAccess
                     //connection = new MySql.Data.MySqlClient.MySqlConnection(strConn);
                     break;
                 case DatabaseType.Oracle:
-                    connection = new Oracle.DataAccess.Client.OracleConnection(strConn);
+                    connection = new System.Data.OracleClient.OracleConnection(strConn);
                     //connection = new System.Data.OracleClient.OracleConnection(strConn);
                     break;
                 case DatabaseType.DB2:

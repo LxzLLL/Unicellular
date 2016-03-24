@@ -6,7 +6,7 @@ using DapperExtensions;
 using Unicellular.DataAccess;
 
 /// <summary>
-/// IDataServiceRepository的实现类，业务层继承Unicellular.ORM中的RepositoryServiceBase类
+/// （不支持sql）IDataServiceRepository的实现类，业务层继承Unicellular.ORM中的RepositoryServiceBase类
 /// </summary>
 namespace Unicellular.ORM
 {

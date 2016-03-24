@@ -1,7 +1,7 @@
 using System;
 using System.Data;
-using Oracle.DataAccess.Client;
-//using System.Data.OracleClient;
+//using Oracle.DataAccess.Client;
+using System.Data.OracleClient;
 using System.Data.Common;
 
 

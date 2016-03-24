@@ -2,8 +2,8 @@
 using System.Configuration;
 using System.Data;
 using System.Data.Common;
-//using System.Data.OracleClient;
-using Oracle.DataAccess.Client;
+//using Oracle.DataAccess.Client;
+using System.Data.OracleClient;
 
 namespace Unicellular.DataAccess.OracleDBHelper
 {

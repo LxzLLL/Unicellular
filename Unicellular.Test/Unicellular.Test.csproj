@@ -72,6 +72,18 @@
       <Project>{aa0865de-b6d0-4fc6-af67-9fa4e968acad}</Project>
       <Name>XLToolLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Unicellular.DataAccess\Unicellular.DataAccess.csproj">
+      <Project>{e0f7ca7c-9d62-439a-b998-b7d59b3173b5}</Project>
+      <Name>Unicellular.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Unicellular.ORM\Unicellular.ORM.csproj">
+      <Project>{b34c9855-44d9-43b6-b69f-e068c8e390b3}</Project>
+      <Name>Unicellular.ORM</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Unicellular.Web.Entity\Unicellular.Web.Entity.csproj">
+      <Project>{727159be-9b40-4ead-b373-e7126bb040f2}</Project>
+      <Name>Unicellular.Web.Entity</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
