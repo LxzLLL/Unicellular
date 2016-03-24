@@ -37,7 +37,7 @@ namespace Unicellular.DataAccess.SqlDBHelper
         private static void PrepareCommand(SqlCommand command, SqlConnection connection, SqlTransaction transaction, CommandType commandType, string commandText, SqlParameter[] commandParameters, out bool mustCloseConnection)
         {
             // 打开连接
-            if (connection.State != ConnectionState.Open)
+            if ( connection.State != ConnectionState.Open )
             {
                 mustCloseConnection = true;
                 connection.Open();
@@ -49,15 +49,15 @@ namespace Unicellular.DataAccess.SqlDBHelper
             command.Connection = connection;
             command.CommandText = commandText;
             // 如果存在事务，则绑定事务
-            if (transaction != null)
+            if ( transaction != null )
             {
                 command.Transaction = transaction;
             }
             command.CommandType = commandType;
             // 如果存在参数，则绑定参数
-            if (commandParameters != null)
+            if ( commandParameters != null )
             {
-                AttachParameters(command, commandParameters);
+                AttachParameters( command, commandParameters );
             }
             return;
         }
@@ -96,7 +96,7 @@ namespace Unicellular.DataAccess.SqlDBHelper
         /// <param name="conn">数据库连接</param>
         /// <param name="Iso">指定连接的事务锁定行为</param>
         /// <returns>当前事务</returns>  
-        public static DbTransaction BeginTransaction(SqlConnection conn, IsolationLevel Iso)
+        public static SqlTransaction BeginTransaction(SqlConnection conn, IsolationLevel Iso)
         {
             conn.Open();
             return conn.BeginTransaction(Iso);

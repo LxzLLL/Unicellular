@@ -374,7 +374,5 @@ namespace Unicellular.DataAccess.OracleDBHelper
         }
 
         #endregion
-
-
     }
 }

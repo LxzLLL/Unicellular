@@ -10,6 +10,9 @@ namespace Unicellular.DataAccess
     /// </summary>
     public class PageHelper
     {
+        private static int defaultPageIndex = 1;
+        private static int defaultPageSize = 10;
+
         #region SqlServer分页
 
         /// <summary>
@@ -18,15 +21,14 @@ namespace Unicellular.DataAccess
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <param name="selectSql"></param>
-        /// <param name="SqlCount"></param>
         /// <param name="orderBy"></param>
         /// <returns></returns>
-        public static string GetPagingSql(int pageIndex, int pageSize, string selectSql, string SqlCount, string orderBy)
+        public static string GetPagingSql(int pageIndex, int pageSize, string selectSql, string orderBy)
         {
-            if (pageIndex == 0)
-                pageIndex = 1;
-            if (pageSize == 0)
-                pageSize = int.MaxValue;
+            if (pageIndex <= 0)
+                pageIndex = defaultPageIndex;
+            if (pageSize <= 0)
+                pageSize = defaultPageSize;      //参数给定错误时，就显示10条
             StringBuilder sbSql = new StringBuilder("DECLARE @pageIndex int,@pageSize int\n");
             sbSql.AppendFormat("SET @pageIndex = {0}\n", pageIndex);
             sbSql.AppendFormat("SET @pageSize = {0}\n", pageSize);
@@ -34,8 +36,6 @@ namespace Unicellular.DataAccess
             sbSql.AppendFormat("{0}\n", selectSql);
             sbSql.Append(") as topT) AS subT\n");
             sbSql.Append(" WHERE rankNumber BETWEEN (@pageIndex-1)*@pageSize+1 AND @pageIndex*@pageSize\n");
-
-            sbSql.AppendFormat("{0}\n", SqlCount);
             return sbSql.ToString();
 
         }
@@ -51,11 +51,12 @@ namespace Unicellular.DataAccess
         /// <param name="SqlCount"></param>
         /// <param name="orderBy"></param>
         /// <returns></returns>
-        public static string GetOraclePagingSql(int pageIndex, int pageSize, string selectSql, string SqlCount, string orderBy) {
-            if (pageIndex <= 0)
-            {
-                pageIndex = 1;
-            }
+        public static string GetOraclePagingSql(int pageIndex, int pageSize, string selectSql, string orderBy)
+        {
+            if ( pageIndex <= 0 )
+                pageIndex = defaultPageIndex;
+            if ( pageSize <= 0 )
+                pageSize = defaultPageSize;      //参数给定错误时，就显示10条
             var toSkip = (pageIndex - 1) * pageSize;
             var topLimit = toSkip + pageSize;
             var sb = new StringBuilder();
@@ -79,10 +80,35 @@ namespace Unicellular.DataAccess
         /// <param name="SqlCount"></param>
         /// <param name="orderBy"></param>
         /// <returns></returns>
-        public static string GetMySqlPagingSql(int pageIndex, int pageSize, string selectSql, string SqlCount, string orderBy)
+        public static string GetMySqlPagingSql(int pageIndex, int pageSize, string selectSql, string orderBy)
         {
 
             return "";
+        }
+        #endregion
+
+        #region Sqlite分页
+        /// <summary>
+        /// 用于Sqlite
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="selectSql"></param>
+        /// <param name="SqlCount"></param>
+        /// <param name="orderBy"></param>
+        /// <returns></returns>
+        public static string GetSqlitePagingSql( int pageIndex, int pageSize, string selectSql, string orderBy )
+        {
+            if ( pageIndex <= 0 )
+                pageIndex = defaultPageIndex;
+            if ( pageSize <= 0 )
+                pageSize = defaultPageSize;      //参数给定错误时，就显示10条
+            var toSkip = (pageIndex - 1) * pageSize;
+            var sb = new StringBuilder();
+            sb.Append( selectSql.Trim().TrimEnd( ';' ) );
+            sb.AppendFormat( " {0}", orderBy );
+            sb.AppendFormat( "limit {0} offset {0}*{1} ", pageSize, toSkip );
+            return sb.ToString();
         }
         #endregion
     }

@@ -17,20 +17,20 @@ namespace Unicellular.DataAccess
         /// <param name="sqlCount"></param>
         /// <param name="orderBy"></param>
         /// <returns></returns>
-        string GetPagingSql(int pageIndex, int pageSize, string selectSql, string sqlCount, string orderBy);
+        string GetPagingSql(int pageIndex, int pageSize, string selectSql, string orderBy);
 
         /// <summary>
         /// 开始一个事务
         /// </summary>
         /// <returns></returns>
         DbTransaction BeginTractionand();
-
+        
         /// <summary>
         /// 回滚事务
         /// </summary>
         /// <param name="dbTransaction">要回滚的事务</param>
         void RollbackTractionand(DbTransaction dbTransaction);
-
+        
         /// <summary>
         /// 结束并确认事务
         /// </summary>

@@ -191,9 +191,9 @@ namespace Unicellular.DataAccess.OracleDBHelper
         /// <param name="sqlCount">查询总数的语句</param>
         /// <param name="orderBy">排序</param>
         /// <returns></returns>
-        public string GetPagingSql( int pageIndex, int pageSize, string selectSql, string sqlCount, string orderBy )
+        public string GetPagingSql( int pageIndex, int pageSize, string selectSql,string orderBy )
         {
-            return PageHelper.GetOraclePagingSql( pageIndex, pageSize, selectSql, sqlCount, orderBy );
+            return PageHelper.GetOraclePagingSql( pageIndex, pageSize, selectSql,orderBy );
         }
 
 

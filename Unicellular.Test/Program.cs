@@ -27,7 +27,7 @@ namespace Unicellular.Test
             var predicate = Predicates.Field<Book>(f=>f.Id,Operator.Eq,1);
             IEnumerable<Book> list = dbconnection.GetList<Book>(predicate,databaseType:DatabaseType.Sqlite);
             dbconnection.GetList<Book>( databaseType: DatabaseType.Sqlite );
-            dbconnection.Close();
+            //dbconnection.Close();
             foreach(Book b in list )
             {
                 Console.WriteLine( b.ToString() );

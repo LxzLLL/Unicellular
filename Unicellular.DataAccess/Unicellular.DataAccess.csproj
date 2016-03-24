@@ -96,6 +96,7 @@
     <Compile Include="SqlDBHelper\SqlAdaptor.cs" />
     <Compile Include="SqlDBHelper\SqlHelper.cs" />
     <Compile Include="SqliteDBHelper\SqliteAdaptor.cs" />
+    <Compile Include="SqliteDBHelper\SqliteHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

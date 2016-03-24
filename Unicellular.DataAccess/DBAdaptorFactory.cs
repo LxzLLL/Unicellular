@@ -24,7 +24,7 @@ namespace Unicellular.DataAccess
                     break;
                 case DatabaseType.DB2:
                 //adaptor = new MySqlDBHelper.MySqlAdaptor( database.Connection );
-                //break;
+                    break;
                 case DatabaseType.Sqlite:
                     //adaptor = new SqliteDBHelper.SqliteAdaptor( database.Connection );
                     break;
