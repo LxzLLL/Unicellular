@@ -17,12 +17,23 @@ namespace Unicellular.Web.UI
                         "~/Scripts/modernizr-*" ) );
 
             bundles.Add( new ScriptBundle( "~/bundles/bootstrap" ).Include(
-                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/bootstrap.min.js",
                       "~/Scripts/respond.js" ) );
-
+            //引用jQuery2.1.4
+            bundles.Add( new ScriptBundle( "~/bundles/plugins/jQuery2.1.4" ).Include(
+                "~/AdminLTE-2.3.0/plugins/jQuery/jQuery-2.1.4.min.js"
+                ) );
+            //引用AdminLTE的app样式
+            bundles.Add( new ScriptBundle( "~/bundles/dist/app" ).Include(
+                "~/AdminLTE-2.3.0/dist/js/app.min.js"
+                ) );
+            //页面主题样式
             bundles.Add( new StyleBundle( "~/Content/css" ).Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css" ) );
+                      "~/Content/font-awesome.min.css",
+                      "~/Content/ionicons.min.css",
+                      "~/AdminLTE-2.3.0/dist/css/AdminLTE.min.css",
+                      "~/AdminLTE-2.3.0/dist/css/skins/skin-blue.min.css" ) );
         }
     }
 }
