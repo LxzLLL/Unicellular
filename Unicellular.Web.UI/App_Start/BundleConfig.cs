@@ -16,24 +16,57 @@ namespace Unicellular.Web.UI
             bundles.Add( new ScriptBundle( "~/bundles/modernizr" ).Include(
                         "~/Scripts/modernizr-*" ) );
 
-            bundles.Add( new ScriptBundle( "~/bundles/bootstrap" ).Include(
-                      "~/Scripts/bootstrap.min.js",
-                      "~/Scripts/respond.js" ) );
+            
             //引用jQuery2.1.4
             bundles.Add( new ScriptBundle( "~/bundles/plugins/jQuery2.1.4" ).Include(
                 "~/AdminLTE-2.3.0/plugins/jQuery/jQuery-2.1.4.min.js"
+                //"~/Scripts/jquery-1.11.0.min.js"
                 ) );
             //引用AdminLTE的app样式
             bundles.Add( new ScriptBundle( "~/bundles/dist/app" ).Include(
-                "~/AdminLTE-2.3.0/dist/js/app.min.js"
+                "~/AdminLTE-2.3.0/dist/js/app.js"
                 ) );
-            //页面主题样式
-            bundles.Add( new StyleBundle( "~/Content/css" ).Include(
+
+            #region bootstrap
+            //bootstrap样式
+            bundles.Add( new StyleBundle( "~/Bootstrap/css" ).Include(
                       "~/Content/bootstrap.css",
                       "~/Content/font-awesome.min.css",
-                      "~/Content/ionicons.min.css",
+                      "~/Content/ionicons.min.css" ) );
+            bundles.Add( new ScriptBundle( "~/bundles/bootstrap" ).Include(
+                       "~/Scripts/bootstrap.min.js",
+                       "~/Scripts/respond.js" ) );
+            #endregion
+
+            //页面主题样式
+            bundles.Add( new StyleBundle( "~/Content/css" ).Include(
                       "~/AdminLTE-2.3.0/dist/css/AdminLTE.min.css",
                       "~/AdminLTE-2.3.0/dist/css/skins/skin-blue.min.css" ) );
+
+            #region 有关Jquery ui datatable table页面所需的css和js资源
+            //有关Jquery table页面所需的css和js资源
+            bundles.Add( new StyleBundle( "~/bundles/plugins/datatablecss" ).Include(
+                "~/AdminLTE-2.3.0/plugins/datatables/dataTables.bootstrap.css",
+                "~/AdminLTE-2.3.0/plugins/datatables/extensions/TableTools/css/dataTables.tableTools.min.css"
+                ) );
+            bundles.Add( new ScriptBundle( "~/bundles/plugins/datatablejs" ).Include(
+                "~/AdminLTE-2.3.0/plugins/datatables/jquery.dataTables.min.js",
+                "~/AdminLTE-2.3.0/plugins/datatables/dataTables.bootstrap.min.js",
+                "~/AdminLTE-2.3.0/plugins/datatables/extensions/TableTools/js/dataTables.tableTools.min.js",
+                "~/AdminLTE-2.3.0/plugins/slimScroll/jquery.slimscroll.min.js",
+                "~/AdminLTE-2.3.0/plugins/fastclick/fastclick.min.js"
+                ) );
+
+            //有关Bootstrap table页面所需的css和js资源
+            bundles.Add( new StyleBundle( "~/bundles/plugins/bstablecss" ).Include(
+                "~/Scripts/Plugins/bstable/bootstrap-table.min.css"
+                ) );
+            bundles.Add( new ScriptBundle( "~/bundles/plugins/bstablejs" ).Include(
+                "~/Scripts/Plugins/bstable/bootstrap-table.js",
+                 "~/Scripts/Plugins/bstable/locale/bootstrap-table-zh-CN.js"
+                ) );
+
+            #endregion
         }
     }
 }

@@ -1,0 +1,100 @@
+﻿
+<div class="row">
+    <div class="col-xs-6">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">字典列表</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <table id="table_dict" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>字典编码</th>
+                            <th>字典名称</th>
+                            <th>字典描述</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+
+    <div class="col-xs-6">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">字典项列表</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <table id="table_dictitem" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>字典项编码</th>
+                            <th>字典项名称</th>
+                            <th>字典项描述</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div>
+</div><!-- /.row -->
+@section ChildPageJs{
+    @Styles.Render( "~/bundles/plugins/datatablecss" )
+    @Scripts.Render( "~/bundles/plugins/datatablejs" )
+    <script type="text/javascript" src="~/Scripts/UITemplate/JqueryUI/JqueryDataTable.js"></script>
+    <script type="text/javascript">
+
+
+        var gridDict = null;
+        var gridDictItem = null;
+
+        $(function () {
+            //字典列表填充
+            initGridDict();
+            //字典项列表填充
+            initGridDictItem();
+
+        });
+
+        //字典列表填充
+        function initGridDict() {
+
+            gridDict = initDataTable($("#table_dict"), {
+                "ajax": "Dict/GetDict",
+                "isEditAndDel": true,
+                "columns": [
+                    { "data": "DICT_CODE" },
+                    { "data": "DICT_NAME" },
+                    { "data": "DICT_DES" },
+                    { "data": "" }                      //用于最后的编辑删除列，thead中也要相应添加一个th
+                ],
+                "onSelectRow": function (rowdata, rowid) {
+                    alert("You clicked on " + rowid + " row");
+                },
+                "onEditData": function (rowdata, rowid) {
+                    alert("编辑一行");
+                },
+                "onDelData": function (rowdata, rowid) {
+                    alert("删除一行");
+                }
+            });
+        }
+        //字典项列表填充
+        function initGridDictItem() {
+            gridDictItem = initDataTable($("#table_dictitem"), {
+                "ajax": "Dict/GetDictItem",
+                "columns": [
+                    { "data": "DI_CODE" },
+                    { "data": "DI_NAME" },
+                    { "data": "DI_DES" }
+                ],
+                "onSelectRow": function (rowdata, rowid) {
+                    alert("You clicked on " + rowid + " row");
+                }
+            });
+        }
+    </script>
+}

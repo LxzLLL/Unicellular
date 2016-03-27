@@ -13,7 +13,7 @@ namespace DapperExtensions.Sql
 
         public override string GetPagingSql(string sql, int page, int resultsPerPage, IDictionary<string, object> parameters)
         {
-            int startValue = page * resultsPerPage;
+            int startValue = (page-1) * resultsPerPage;
             return GetSetSql(sql, startValue, resultsPerPage, parameters);
         }
 

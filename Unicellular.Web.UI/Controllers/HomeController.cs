@@ -13,10 +13,15 @@ namespace Unicellular.Web.UI.Controllers
         public ActionResult Index()
         {
             //ViewBag.Title = "Home Page";
-            SysDictBll dictbll = new SysDictBll();
+            SysDictService dictbll = new SysDictService();
             List<T_Sys_Dict> dicts = dictbll.GetDictAll();
             //ViewBag.Dicts = dicts;
             return View( dicts );
+        }
+
+        public ActionResult Demo2()
+        {
+            return View();
         }
     }
 }
