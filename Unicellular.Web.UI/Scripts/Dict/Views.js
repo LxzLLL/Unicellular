@@ -36,8 +36,9 @@ var TableInit = function () {
             pageSize: 10,                       //每页的记录行数（*）
             pageList: [10, 20, 50, 100, 200, 500],        //可供选择的每页的行数（*）
             search: true,                       //搜索文本框组件
-            searchTimeOut:1000,                //搜索自动触发时间
+            //searchTimeOut:1000,                //搜索自动触发时间
             formatSearch: function () { return "名称搜索" },
+            searchOnEnterKey:true,            //按下"Enter"键后进行检索
             //strictSearch: true,
             showColumns: true,                  //是否显示所有列
             showRefresh: true,                  //是否显示刷新按钮

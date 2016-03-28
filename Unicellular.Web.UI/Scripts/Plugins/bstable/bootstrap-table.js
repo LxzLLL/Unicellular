@@ -1080,6 +1080,7 @@
             this.$toolbar.append(html.join(''));
             $search = this.$toolbar.find('.search input');
             $search.off('keyup drop').on('keyup drop', function (event) {
+                //debugger;
                 if (that.options.searchOnEnterKey) {
                     if (event.keyCode !== 13) {
                         return;
@@ -1089,7 +1090,7 @@
                 clearTimeout(timeoutId); // doesn't matter if it's 0
                 timeoutId = setTimeout(function () {
                     that.onSearch(event);
-                }, that.options.searchTimeOut);
+                }, that.options.event.keyCode);
             });
 
             if (isIEBrowser()) {
