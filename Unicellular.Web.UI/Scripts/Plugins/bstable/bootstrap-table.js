@@ -1090,7 +1090,7 @@
                 clearTimeout(timeoutId); // doesn't matter if it's 0
                 timeoutId = setTimeout(function () {
                     that.onSearch(event);
-                }, that.options.event.keyCode);
+                }, that.options.searchTimeOut);
             });
 
             if (isIEBrowser()) {

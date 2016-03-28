@@ -2,6 +2,9 @@
  * Bootstrap v3.3.5 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
  * Licensed under the MIT license
+ *
+ * Line:1161 add by Arvin 2016-03-28 弹出框居上1/3。。。。。。
+ *
  */
 
 if (typeof jQuery === 'undefined') {
@@ -1152,9 +1155,14 @@ if (typeof jQuery === 'undefined') {
     var modalIsOverflowing = this.$element[0].scrollHeight > document.documentElement.clientHeight
 
     this.$element.css({
-      paddingLeft:  !this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '',
-      paddingRight: this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''
-    })
+        paddingLeft: !this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '',
+        paddingRight: this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''
+    });
+    // add by Arvin 2016-03-28 弹出框居上1/3。。。
+    var $modal_dialog = $(this.$element[0]).find('.modal-dialog');
+    var m_top = ($(document).height() - $modal_dialog.height()) / 3;
+    $modal_dialog.css({ 'margin': m_top + 'px auto' });
+
   }
 
   Modal.prototype.resetAdjustments = function () {

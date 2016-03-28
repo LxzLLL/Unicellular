@@ -34,7 +34,7 @@ namespace Unicellular.Web.UI
                       "~/Content/font-awesome.min.css",
                       "~/Content/ionicons.min.css" ) );
             bundles.Add( new ScriptBundle( "~/bundles/bootstrap" ).Include(
-                       "~/Scripts/bootstrap.min.js",
+                       "~/Scripts/bootstrap.js",
                        "~/Scripts/respond.js" ) );
             #endregion
 
@@ -56,7 +56,8 @@ namespace Unicellular.Web.UI
                 "~/AdminLTE-2.3.0/plugins/slimScroll/jquery.slimscroll.min.js",
                 "~/AdminLTE-2.3.0/plugins/fastclick/fastclick.min.js"
                 ) );
-
+            #endregion
+            #region 有关Bootstrap table页面所需的css和js资源
             //有关Bootstrap table页面所需的css和js资源
             bundles.Add( new StyleBundle( "~/bundles/plugins/bstablecss" ).Include(
                 "~/Scripts/Plugins/bstable/bootstrap-table.min.css"
@@ -65,8 +66,19 @@ namespace Unicellular.Web.UI
                 "~/Scripts/Plugins/bstable/bootstrap-table.js",
                  "~/Scripts/Plugins/bstable/locale/bootstrap-table-zh-CN.js"
                 ) );
-
             #endregion
+
+            #region 有关Bootstrap modal页面所需的css和js资源
+            //有关Bootstrap table页面所需的css和js资源
+            //bundles.Add( new StyleBundle( "~/bundles/plugins/bstablecss" ).Include(
+            //    "~/Scripts/Plugins/bstable/bootstrap-table.min.css"
+            //    ) );
+            //bundles.Add( new ScriptBundle( "~/bundles/plugins/bstablejs" ).Include(
+            //    "~/Scripts/Plugins/bstable/bootstrap-table.js",
+            //     "~/Scripts/Plugins/bstable/locale/bootstrap-table-zh-CN.js"
+            //    ) );
+            #endregion
+
         }
     }
 }
