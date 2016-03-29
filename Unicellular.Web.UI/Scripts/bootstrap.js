@@ -3,7 +3,7 @@
  * Copyright 2011-2015 Twitter, Inc.
  * Licensed under the MIT license
  *
- * Line:1161 add by Arvin 2016-03-28 弹出框居上1/3。。。。。。
+ * Line:1161 add by Arvin 2016-03-28 弹出框居上1/4。。。。。。
  *
  */
 
@@ -1160,7 +1160,7 @@ if (typeof jQuery === 'undefined') {
     });
     // add by Arvin 2016-03-28 弹出框居上1/3。。。
     var $modal_dialog = $(this.$element[0]).find('.modal-dialog');
-    var m_top = ($(document).height() - $modal_dialog.height()) / 3;
+    var m_top = ($(document).height() - $modal_dialog.height()) / 4;
     $modal_dialog.css({ 'margin': m_top + 'px auto' });
 
   }

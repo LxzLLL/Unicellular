@@ -68,15 +68,14 @@ namespace Unicellular.Web.UI
                 ) );
             #endregion
 
-            #region 有关Bootstrap modal页面所需的css和js资源
+            #region 有关Bootstrap modal页面所需的css和js资源（封装）
             //有关Bootstrap table页面所需的css和js资源
-            //bundles.Add( new StyleBundle( "~/bundles/plugins/bstablecss" ).Include(
-            //    "~/Scripts/Plugins/bstable/bootstrap-table.min.css"
-            //    ) );
-            //bundles.Add( new ScriptBundle( "~/bundles/plugins/bstablejs" ).Include(
-            //    "~/Scripts/Plugins/bstable/bootstrap-table.js",
-            //     "~/Scripts/Plugins/bstable/locale/bootstrap-table-zh-CN.js"
-            //    ) );
+            bundles.Add( new StyleBundle( "~/bundles/plugins/bsDialogcss" ).Include(
+                "~/Scripts/Plugins/bsDialog/css/bootstrap-dialog.min.css"
+                ) );
+            bundles.Add( new ScriptBundle( "~/bundles/plugins/bsDialogjs" ).Include(
+                "~/Scripts/Plugins/bsDialog/css/bootstrap-dialog.js"
+                ) );
             #endregion
 
         }

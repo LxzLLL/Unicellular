@@ -94,11 +94,11 @@ var ButtonInit = function () {
         //初始化页面上面的按钮事件
         $("#btn_add_dict").on("click", function () { fn_OperaDict("add") });
         $("#btn_edit_dict").on("click", function () { fn_OperaDict("edit") });
-        $("#btn_delete_dict").on("click", onDelDict);
+        $("#btn_delete_dict").on("click", fn_DelDict);
     };
     return oInit;
 };
-
+//dict按钮操作
 function fn_OperaDict(operate) {
     $("#modal_dict").modal("show");
     if (operate==="add") {
@@ -107,6 +107,9 @@ function fn_OperaDict(operate) {
     else if (operate==="edit") {
 
     }
+}
+function fn_DelDict() {
+
 }
 
 
