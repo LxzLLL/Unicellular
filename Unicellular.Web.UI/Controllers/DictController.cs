@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Unicellular.Web.BLL.System;
 using Unicellular.Web.Entity.System;
 using XLToolLibrary.Utilities;
+using Unicellular.Web.UI.ViewModels.System;
 namespace Unicellular.Web.UI.Controllers
 {
     public class DictController : Controller

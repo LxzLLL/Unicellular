@@ -192,6 +192,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\System\DictModelView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdminLTE-2.3.0\dist\css\AdminLTE.css" />
@@ -1180,6 +1181,41 @@
     <Content Include="Scripts\Plugins\bstable\locale\bootstrap-table-zh-CN.min.js" />
     <Content Include="Scripts\Plugins\bstable\locale\bootstrap-table-zh-TW.js" />
     <Content Include="Scripts\Plugins\bstable\locale\bootstrap-table-zh-TW.min.js" />
+    <Content Include="Scripts\Plugins\bsValidator\css\bootstrapValidator.css" />
+    <Content Include="Scripts\Plugins\bsValidator\css\bootstrapValidator.min.css" />
+    <Content Include="Scripts\Plugins\bsValidator\js\bootstrapValidator.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\bootstrapValidator.min.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\ar_MA.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\be_FR.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\be_NL.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\bg_BG.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\cs_CZ.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\da_DK.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\de_DE.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\en_US.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\es_CL.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\es_ES.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\fa_IR.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\fr_FR.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\gr_EL.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\hu_HU.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\id_ID.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\it_IT.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\ja_JP.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\nl_NL.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\no_NO.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\pl_PL.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\pt_BR.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\ro_RO.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\ru_RU.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\sr_RS.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\sv_SE.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\th_TH.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\tr_TR.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\ua_UA.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\vi_VN.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\zh_CN.js" />
+    <Content Include="Scripts\Plugins\bsValidator\js\language\zh_TW.js" />
     <Content Include="Scripts\UITemplate\JqueryUI\JqueryDataTable.js" />
     <Content Include="Scripts\UITemplate\Readme.txt" />
     <Content Include="Scripts\jquery-1.11.0.js" />

@@ -1,4 +1,25 @@
 ﻿
+//dict的viewmodel对象
+var viewModelDict = {
+    ID:"",
+    DICT_CODE: "",
+    DICT_NAME: "",
+    DICT_DES:""
+}
+//dictItem的viewmodel对象
+var viewModelDictItem = {
+    ID: "",
+    DI_CODE: "",
+    DI_NAME: "",
+    DI_DES: ""
+}
+
+//function viewModel={
+
+//}
+
+
+
 $(function () {
 
     //////初始化dict表
@@ -15,6 +36,15 @@ $(function () {
     initGridDictItem();
     initButtonDictItem();
 
+
+    //初始化验证
+    var formDictValidator = $("#dictForm").bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        }
+    });
 });
 
 //字典列表填充
@@ -102,10 +132,14 @@ var ButtonInit = function () {
 function fn_OperaDict(operate) {
     $("#modal_dict").modal("show");
     if (operate==="add") {
+        if (!formDictValidator.isValid()) {
 
+        }
     }
     else if (operate==="edit") {
+        if (!formDictValidator.isValid()) {
 
+        }
     }
 }
 function fn_DelDict() {

@@ -1,5 +1,7 @@
-﻿@Styles.Render( "~/bundles/plugins/bstablecss" )
+﻿
+@Styles.Render( "~/bundles/plugins/bstablecss" )
 @Styles.Render( "~/bundles/plugins/bsDialogcss")
+@Styles.Render( "~/bundles/plugins/bsvalidatorcss" )
 @*<div class="panel-body" style="padding-bottom:0px;">
     <div class="panel panel-default">
         <div class="panel-heading">查询条件</div>
@@ -21,7 +23,7 @@
             </form>
         </div>
     </div>*@
-
+@Model Unicellular.Web.UI.ViewModels.System.DictModelView
 
 <div class="rows" style="padding:0px;">
 
@@ -78,7 +80,37 @@
                 <h4 class="modal-title">Modal Default</h4>
             </div>
             <div class="modal-body">
-                <p>One fine body&hellip;</p>
+                <!--字典表单组-->
+                <form id="dictForm">
+                    <div class="form-group">
+                        <label for="DICT_CODE">字典编码</label>
+                        <input type="text" class="form-control required" id="DICT_CODE" name="DICT_CODE" 
+                               placeholder="请输入字典编码，最大32个字符"
+                               data-bv-notempty
+                               data-bv-notempty-message="不能为空"
+                               maxlength=32
+                               data-bv-stringlength-message="最大32个字符"
+                               >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="DICT_NAME">字典名称</label>
+                        <input type="text" class="form-control" id="DICT_NAME" name="DICT_NAME"
+                               placeholder="请输入字典名称，最大64个字符"
+                               data-bv-notempty
+                               data-bv-notempty-message="不能为空"
+                               maxlength=64
+                               >
+                    </div>
+                    <div class="form-group">
+                        <label for="DICT_DES">字典描述</label>
+                        <textarea class="form-control" id="DICT_DES" name="DICT_DES"
+                                  placeholder="请输入字典描述，最大256个字符"
+                                  rows="3"
+                                  maxlength=256
+                                  ></textarea>
+                    </div>
+                    </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
@@ -92,5 +124,7 @@
 @section ChildPageJs{
     @Scripts.Render( "~/bundles/plugins/bstablejs" )
     @Scripts.Render( "~/bundles/plugins/bsDialogjs" )
+    @Scripts.Render( "~/bundles/plugins/knockoutjs")
+    @Scripts.Render( "~/bundles/plugins/bsvalidatorjs" )
     <script type="text/javascript" src="~/Scripts/Dict/Views.js"></script>
 }
