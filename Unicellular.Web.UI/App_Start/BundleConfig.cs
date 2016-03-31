@@ -82,7 +82,8 @@ namespace Unicellular.Web.UI
 
             #region knockoutjs的资源引用
             bundles.Add( new ScriptBundle( "~/bundles/plugins/knockoutjs" ).Include(
-                "~/Scripts/knockout-3.4.0.js"
+                "~/Scripts/knockout-3.4.0.js",
+                 "~/Scripts/knockout.mapping-latest.js"
                 ) );
             #endregion
 

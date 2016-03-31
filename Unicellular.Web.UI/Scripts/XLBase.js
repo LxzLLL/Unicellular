@@ -1,5 +1,194 @@
 ﻿/**
  * @author Arvin
+ *  常用方法
+ */
+//var XLBase = {
+//    //获取uuid
+//    getUid: function () {
+//        var s = [];
+//        var hexDigits = "0123456789abcdef";
+//        for (var i = 0; i < 36; i++) {
+//            s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+//        }
+//        s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
+//        s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
+//        s[8] = s[13] = s[18] = s[23] = "";
+
+//        var uid = s.join("");
+//        return uid;
+//    },
+//    //验证ip和port，location格式为***.***.***.***:***，如果无端口，则不验证
+//    isValidIP: function (location) {
+//        var objRet = {
+//            error: "",
+//            isValid: true
+//        };
+//        var loca = jQuery.trim(location);
+//        if (!loca) {
+//            objRet.error = "IP地址为空！";
+//            objRet.isValid = false;
+//        }
+//        else {
+//            var strArray = loca.split(":");
+//            var ipTrim = $.trim(strArray[0]);
+//            var reg = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
+//            if (!reg.test(ipTrim)) {
+//                objRet.error = "IP地址错误！";
+//                objRet.isValid = false;
+//            }
+//            else {
+//                //端口
+//                if (strArray.length > 1) {
+//                    var portTrim = $.trim(strArray[1]);
+//                    if (!portTrim || portTrim < 1 || portTrim > 65535) {
+//                        objRet.error = "端口错误！";
+//                        objRet.isValid = false;
+//                    }
+//                }
+//            }
+//        }
+//        return objRet;
+//    },
+//    /*-------------------- Cookie操作 --------------------*/
+//    setCookie: function (sName, sValue, oExpires, sPath, sDomain, bSecure) { //-----设置Cookie-----  
+//        var sCookie = sName + '=' + encodeURIComponent(sValue);
+//        if (oExpires) {
+//            var date = new Date();
+//            date.setTime(date.getTime() + oExpires * 60 * 60 * 1000);
+//            sCookie += '; expires=' + date.toUTCString();
+//        }
+//        if (sPath) {
+//            sCookie += '; path=' + sPath;
+//        }
+//        if (sDomain) {
+//            sCookie += '; domain=' + sDomain;
+//        }
+//        if (bSecure) {
+//            sCookie += '; secure';
+//        }
+//        document.cookie = sCookie;
+//    },
+//    getCookie: function (sName) { //-----获得Cookie值-----  
+//        var sRE = '(?:; )?' + sName + '=([^;]*)';
+//        var oRE = new RegExp(sRE);
+//        if (oRE.test(document.cookie)) {
+//            return decodeURIComponent(RegExp['$1']);
+//        } else {
+//            return null;
+//        }
+//    },
+//    deleteCookie: function (sName, sPath, sDomain) { //-----删除Cookie值-----  
+//        this.setCookie(sName, '', new Date(0), sPath, sDomain);
+//    },
+//    clearCookie: function () { //清除所有Cookie  
+//        var cookies = document.cookie.split(";");
+//        var len = cookies.length;
+//        for (var i = 0; i < len; i++) {
+//            var cookie = cookies[i];
+//            var eqPos = cookie.indexOf("=");
+//            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+//            name = name.replace(/^\s*|\s*$/, "");
+//            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/"
+//        }
+//    },
+//    //类型转，根据不同类型数据排序，比如，整型，日期，浮点，字符串，接受两个参数，一个是值，一个是排序的数据类型 
+//    convert: function (sValue, sDataType) {
+//        switch (sDataType) {
+//            case "int":
+//                return parseInt(sValue);
+//            case "float":
+//                return parseFloat(sValue);
+//            case "date":
+//                return new Date(Date.parse(sValue));
+//            default:
+//                return sValue.toString();
+//        }
+//    },
+//    //获取URL Query值
+//    GetQueryString: function (name) {
+//        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+//        var r = window.location.search.substr(1).match(reg);
+//        if (r != null)
+//            return unescape(r[2]);
+//        return null;
+//    },
+//    //escape编码
+//    HTMLEscape: function (str) {
+//        var s = "";
+//        if (str.length == 0) {
+//            return "";
+//        }
+//        s = str.replace(/&/g, "&amp;");
+//        s = s.replace(/</g, "&lt;");
+//        s = s.replace(/>/g, "&gt;");
+//        s = s.replace(/ /g, "&nbsp;");
+//        s = s.replace(/\'/g, "&#39;");
+//        s = s.replace(/\"/g, "&quot;");
+//        return s;
+//    },
+//    //动态加载js
+//    loadJS: function (url) {
+//        var statu = true; //初始状态  
+//        var js = document.getElementsByTagName("script");
+//        var len = js.length;
+//        for (var i = 0; i < len; i++) {
+//            if (js[i].getAttribute("src") == url) {
+//                statu = false; //如果已经添加，则设置为Flase，不再添加  
+//            }
+//        }
+//        if (statu) {
+//            var script = document.createElement("script");
+//            script.type = "text/javascript";
+//            script.src = url;
+//            var header = document.getElementsByTagName("head")[0];
+//            header.appendChild(script);
+
+//        }
+//    },
+//    //jsonp跨域封装
+//    getJSONP: function (url, callback) {
+//        if (!url) {
+//            return;
+//        }
+//        var a = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']; //定义一个数组以便产生随机函数名
+//        var r1 = Math.floor(Math.random() * 10);
+//        var r2 = Math.floor(Math.random() * 10);
+//        var r3 = Math.floor(Math.random() * 10);
+//        var name = 'getJSONP' + a[r1] + a[r2] + a[r3];
+//        var cbname = 'getJSONP.' + name; //作为jsonp函数的属性
+//        if (url.indexOf('?') === -1) {
+//            url += '?jsonp=' + cbname;
+//        } else {
+//            url += '&jsonp=' + cbname;
+//        }
+//        var script = document.createElement('script');
+//        //定义被脚本执行的回调函数
+//        getJSONP[name] = function (e) {
+//            try {
+//                //alert(e.name);
+//                callback && callback(e);
+//            } catch (e) {
+//                //
+//            }
+//            finally {
+//                //最后删除该函数与script元素
+//                delete getJSOP[name];
+//                script.parentNode.removeChild(script);
+//            }
+
+//        }
+//        script.src = url;
+//        document.getElementsByTagName('head')[0].appendChild(script);
+//        //调用方式demo
+//        //getJSONP('http://localhost:8888/', function (response) {
+//        //    alert(response.name);
+//        //});
+//    }
+//};
+
+
+/**
+ * @author Arvin
  *  此功能直接将属性添加到类型上
  */
 (function (){
@@ -233,193 +422,7 @@
 	Object.extend(Map.prototype,mapXLExtend);//为Map增加方法
 })();
 
-/**
- * @author Arvin
- *  常用方法
- */
-var XLBase ={
-    //获取uuid
-    uuid:function(){
-        var s = [];
-        var hexDigits = "0123456789abcdef";
-        for (var i = 0; i < 36; i++) {
-            s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
-        }
-        s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
-        s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
-        s[8] = s[13] = s[18] = s[23] = "";
 
-        var uuid = s.join("");
-        return uuid;
-    },
-    //验证ip和port，location格式为***.***.***.***:***，如果无端口，则不验证
-    isValidIP: function (location) {
-        var objRet = {
-            error: "",
-            isValid: true
-        };
-        var loca = jQuery.trim(location);
-        if (!loca) {
-            objRet.error = "IP地址为空！";
-            objRet.isValid = false;
-        }
-        else {
-            var strArray = loca.split(":");
-            var ipTrim = $.trim(strArray[0]);
-            var reg = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
-            if (!reg.test(ipTrim)) {
-                objRet.error = "IP地址错误！";
-                objRet.isValid = false;
-            }
-            else {
-                //端口
-                if (strArray.length > 1) {
-                    var portTrim = $.trim(strArray[1]);
-                    if (!portTrim || portTrim < 1 || portTrim > 65535) {
-                        objRet.error = "端口错误！";
-                        objRet.isValid = false;
-                    }
-                }
-            }
-        }
-        return objRet;
-    },
-    /*-------------------- Cookie操作 --------------------*/
-    setCookie: function (sName, sValue, oExpires, sPath, sDomain, bSecure) { //-----设置Cookie-----  
-        var sCookie = sName + '=' + encodeURIComponent(sValue);
-        if (oExpires) {
-            var date = new Date();
-            date.setTime(date.getTime() + oExpires * 60 * 60 * 1000);
-            sCookie += '; expires=' + date.toUTCString();
-        }
-        if (sPath) {
-            sCookie += '; path=' + sPath;
-        }
-        if (sDomain) {
-            sCookie += '; domain=' + sDomain;
-        }
-        if (bSecure) {
-            sCookie += '; secure';
-        }
-        document.cookie = sCookie;
-    },
-    getCookie: function (sName) { //-----获得Cookie值-----  
-        var sRE = '(?:; )?' + sName + '=([^;]*)';
-        var oRE = new RegExp(sRE);
-        if (oRE.test(document.cookie)) {
-            return decodeURIComponent(RegExp['$1']);
-        } else {
-            return null;
-        }
-    },
-    deleteCookie: function (sName, sPath, sDomain) { //-----删除Cookie值-----  
-        this.setCookie(sName, '', new Date(0), sPath, sDomain);
-    },
-    clearCookie: function () { //清除所有Cookie  
-        var cookies = document.cookie.split(";");
-        var len = cookies.length;
-        for (var i = 0; i < len; i++) {
-            var cookie = cookies[i];
-            var eqPos = cookie.indexOf("=");
-            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-            name = name.replace(/^\s*|\s*$/, "");
-            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/"
-        }
-    },
-    //类型转，根据不同类型数据排序，比如，整型，日期，浮点，字符串，接受两个参数，一个是值，一个是排序的数据类型 
-    convert: function (sValue, sDataType) {  
-        switch (sDataType) {
-            case "int":
-                return parseInt(sValue);
-            case "float":
-                return parseFloat(sValue);
-            case "date":
-                return new Date(Date.parse(sValue));
-            default:
-                return sValue.toString();
-        }
-    },
-    //获取URL Query值
-    GetQueryString: function (name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null)
-            return unescape(r[2]);
-        return null;
-    },
-    //escape编码
-    HTMLEscape: function (str) {
-        var s = "";
-        if (str.length == 0) {
-            return "";
-        }
-        s = str.replace(/&/g, "&amp;");
-        s = s.replace(/</g, "&lt;");
-        s = s.replace(/>/g, "&gt;");
-        s = s.replace(/ /g, "&nbsp;");
-        s = s.replace(/\'/g, "&#39;");
-        s = s.replace(/\"/g, "&quot;");
-        return s;
-    },
-    //动态加载js
-    loadJS: function (url) {
-        var statu = true; //初始状态  
-        var js = document.getElementsByTagName("script");
-        var len = js.length;
-        for (var i = 0; i < len; i++) {
-            if (js[i].getAttribute("src") == url) {
-                statu = false; //如果已经添加，则设置为Flase，不再添加  
-            }
-        }
-        if (statu) {
-            var script = document.createElement("script");
-            script.type = "text/javascript";
-            script.src = url;
-            var header = document.getElementsByTagName("head")[0];
-            header.appendChild(script);
-
-        }
-    },
-    //jsonp跨域封装
-    getJSONP: function (url, callback) {
-        if (!url) {
-            return;
-        }
-        var a = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']; //定义一个数组以便产生随机函数名
-        var r1 = Math.floor(Math.random() * 10);
-        var r2 = Math.floor(Math.random() * 10);
-        var r3 = Math.floor(Math.random() * 10);
-        var name = 'getJSONP' + a[r1] + a[r2] + a[r3];
-        var cbname = 'getJSONP.' + name; //作为jsonp函数的属性
-        if (url.indexOf('?') === -1) {
-            url += '?jsonp=' + cbname;
-        } else {
-            url += '&jsonp=' + cbname;
-        }
-        var script = document.createElement('script');
-        //定义被脚本执行的回调函数
-        getJSONP[name] = function (e) {
-            try {
-                //alert(e.name);
-                callback && callback(e);
-            } catch (e) {
-                //
-            }
-            finally {
-                //最后删除该函数与script元素
-                delete getJSOP[name];
-                script.parentNode.removeChild(script);
-            }
-
-        }
-        script.src = url;
-        document.getElementsByTagName('head')[0].appendChild(script);
-        //调用方式demo
-        //getJSONP('http://localhost:8888/', function (response) {
-        //    alert(response.name);
-        //});
-    }
-}
 
 /**
  * @author Arvin
@@ -445,4 +448,7 @@ var XLBase ={
         return serializeObj;
     };
     //console.log($(this).serializeJson());
-})(jQuery);
+})(jQuery)
+
+
+

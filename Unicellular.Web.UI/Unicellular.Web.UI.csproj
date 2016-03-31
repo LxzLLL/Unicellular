@@ -1043,6 +1043,8 @@
     <None Include="Scripts\jquery-1.11.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\knockout.mapping-latest.debug.js" />
+    <Content Include="Scripts\knockout.mapping-latest.js" />
     <Content Include="Scripts\Plugins\bsDialog\css\bootstrap-dialog.css" />
     <Content Include="Scripts\Plugins\bsDialog\css\bootstrap-dialog.min.css" />
     <Content Include="Scripts\Plugins\bsDialog\js\bootstrap-dialog.js" />

@@ -1,4 +1,5 @@
 ﻿
+
 //dict的viewmodel对象
 var viewModelDict = {
     ID: ko.observable(""),
@@ -8,6 +9,7 @@ var viewModelDict = {
     js_Form_Title: ko.observable(""),
     js_Form_Operation:ko.observable("")
 };
+
 //dictItem的viewmodel对象
 var viewModelDictItem = {
     ID: ko.observable(""),
@@ -17,38 +19,45 @@ var viewModelDictItem = {
     js_Form_Title: ko.observable(""),
     js_Form_Operation:ko.observable("")
 };
-
+//to model忽略的属性
+var ignorMapping = {
+    'ignore': ["js_Form_Title", "js_Form_Operation"]
+}
+//var obj
 //function viewModel={
 
 //}
+var gridDict = null;
+var oButtonDict = null;
+var formDictValidator = null;
 
-
+var gridDictItem = null;
 
 $(function () {
-
     //////初始化dict表
     //1.初始化Table
-    var gridDict = new TableInit();
+    gridDict = new TableInit();
     gridDict.Init();
 
     //2.初始化Button的点击事件
-    var oButtonDict = new ButtonInit();
+    oButtonDict = new ButtonInit();
     oButtonDict.Init();
 
     //////初始化dictitem
-    var gridDictItem = null;
     initGridDictItem();
     initButtonDictItem();
 
     //初始化验证
-    var formDictValidator = $("#dictForm").bootstrapValidator({
+    debugger;
+    $("#dictForm").bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh'
         }
     });
-
+    //获取验证插件实例
+    formDictValidator = $("#dictForm").data('bootstrapValidator');
     //knockoutjs绑定数据
     BindKoData();
 
@@ -141,14 +150,16 @@ var ButtonInit = function () {
 //dict按钮操作
 function fn_OperaDict(operate) {
     if (operate==="add") {
-        viewModelDict.FormTitle("字典项添加");
+        viewModelDict.js_Form_Title("字典项添加");
+        viewModelDict.js_Form_Operation("add");
     }
     else if (operate==="edit") {
-        viewModelDict.FormTitle("字典项编辑");
+        viewModelDict.s_Form_Title("字典项编辑");
+        viewModelDict.js_Form_Operation("edit");
     }
     $("#modal_dict").modal("show");
 }
-
+//dict删除
 function fn_DelDict() {
 
 }
@@ -158,7 +169,15 @@ function DictSave() {
     if (!formDictValidator.isValid()) {
         return;
     }
-    if(viewModelDict.)
+    if (viewModelDict.js_Form_Operation() == "add") {
+        //添加
+        //viewModelDict.ID(XLBase.getUid());
+        var obj = ko.mapping.toJSON(viewModelDict, ignorMapping);
+        alert(obj);
+    }
+    else if (viewModelDict.js_Form_Operation() == "edit") {
+        //编辑
+    }
 }
 
 
