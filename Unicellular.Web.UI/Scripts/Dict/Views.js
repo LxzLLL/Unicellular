@@ -1,18 +1,22 @@
 ﻿
 //dict的viewmodel对象
 var viewModelDict = {
-    ID:"",
-    DICT_CODE: "",
-    DICT_NAME: "",
-    DICT_DES:""
-}
+    ID: ko.observable(""),
+    DICT_CODE: ko.observable(""),
+    DICT_NAME: ko.observable(""),
+    DICT_DES: ko.observable(""),
+    js_Form_Title: ko.observable(""),
+    js_Form_Operation:ko.observable("")
+};
 //dictItem的viewmodel对象
 var viewModelDictItem = {
-    ID: "",
-    DI_CODE: "",
-    DI_NAME: "",
-    DI_DES: ""
-}
+    ID: ko.observable(""),
+    DI_CODE: ko.observable(""),
+    DI_NAME: ko.observable(""),
+    DI_DES: ko.observable(""),
+    js_Form_Title: ko.observable(""),
+    js_Form_Operation:ko.observable("")
+};
 
 //function viewModel={
 
@@ -36,7 +40,6 @@ $(function () {
     initGridDictItem();
     initButtonDictItem();
 
-
     //初始化验证
     var formDictValidator = $("#dictForm").bootstrapValidator({
         feedbackIcons: {
@@ -45,6 +48,12 @@ $(function () {
             validating: 'glyphicon glyphicon-refresh'
         }
     });
+
+    //knockoutjs绑定数据
+    BindKoData();
+
+    //绑定表单保存事件
+    $("#btnDictSave").on("click", DictSave);
 });
 
 //字典列表填充
@@ -128,22 +137,28 @@ var ButtonInit = function () {
     };
     return oInit;
 };
+
 //dict按钮操作
 function fn_OperaDict(operate) {
-    $("#modal_dict").modal("show");
     if (operate==="add") {
-        if (!formDictValidator.isValid()) {
-
-        }
+        viewModelDict.FormTitle("字典项添加");
     }
     else if (operate==="edit") {
-        if (!formDictValidator.isValid()) {
-
-        }
+        viewModelDict.FormTitle("字典项编辑");
     }
+    $("#modal_dict").modal("show");
 }
+
 function fn_DelDict() {
 
+}
+
+//dict保存按钮
+function DictSave() {
+    if (!formDictValidator.isValid()) {
+        return;
+    }
+    if(viewModelDict.)
 }
 
 
@@ -206,4 +221,11 @@ function dictItemParams (params) {
 //初始化 dictitem的按钮
 function initButtonDictItem() {
 
+}
+
+
+
+//knockoutjs绑定dictForm数据
+function BindKoData() {
+    ko.applyBindings(viewModelDict, $("#modal_dict").get(0));
 }
