@@ -20,13 +20,10 @@ var viewModelDictItem = {
     js_Form_Operation:ko.observable("")
 };
 //to model忽略的属性
-var ignorMapping = {
-    'ignore': ["js_Form_Title", "js_Form_Operation"]
-}
-//var obj
-//function viewModel={
-
+//var ignorMapping = {
+//    'ignore': ["js_Form_Title", "js_Form_Operation"]
 //}
+
 var gridDict = null;
 var oButtonDict = null;
 var formDictValidator = null;
@@ -48,7 +45,6 @@ $(function () {
     initButtonDictItem();
 
     //初始化验证
-    debugger;
     $("#dictForm").bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -149,7 +145,9 @@ var ButtonInit = function () {
 
 //dict按钮操作
 function fn_OperaDict(operate) {
-    if (operate==="add") {
+    debugger;
+    viewModelDict = new viewModelDict();
+    if (operate === "add") {
         viewModelDict.js_Form_Title("字典项添加");
         viewModelDict.js_Form_Operation("add");
     }
@@ -161,7 +159,11 @@ function fn_OperaDict(operate) {
 }
 //dict删除
 function fn_DelDict() {
-
+    //debugger;
+    //警告框
+    //警告框确认，执行删除
+    //结果提示
+    toastr["warning"]("警告，不能删除", "警告");
 }
 
 //dict保存按钮
@@ -170,10 +172,31 @@ function DictSave() {
         return;
     }
     if (viewModelDict.js_Form_Operation() == "add") {
-        //添加
-        //viewModelDict.ID(XLBase.getUid());
-        var obj = ko.mapping.toJSON(viewModelDict, ignorMapping);
-        alert(obj);
+        //form的json化
+        //var objJson = ko.mapping.toJSON(viewModelDict, ignorMapping);
+        var objJson = $("#dictForm").serializeJson();
+        //debugger;
+        $.ajax({
+            cache: false,
+            async: false,
+            type: "POST",
+            url: "Dict/AddDict",
+            dataType: "json",
+            data: { data: objJson },
+            success: function (data, textStatus) {
+                //提示成功
+                if (data.MsgCode == 0) {
+                    toastr["sucess"](data.MsgDes, "成功");
+                    //更新表格
+                    gridDict.refresh();
+                }
+                else {
+                    //提示失败
+                    toastr["failure"](data.MsgDes, "失败");
+                }
+            }
+        });
+        //alert(obj);
     }
     else if (viewModelDict.js_Form_Operation() == "edit") {
         //编辑

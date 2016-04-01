@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Unicellular.Web.DAO;
+using Unicellular.Web.Entity;
 using Unicellular.Web.Entity.System;
 using DapperExtensions;
+using XLToolLibrary.Utilities;
 
 namespace Unicellular.Web.BLL.System
 {
@@ -109,5 +111,37 @@ namespace Unicellular.Web.BLL.System
             List < T_Sys_DictItem > dictitems = dao.GetList<T_Sys_DictItem>().ToList();
             return dictitems == null ? new List<T_Sys_DictItem>() : dictitems;
         }
+
+        /// <summary>
+        /// 添加字典
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <returns></returns>
+        public MsgEntity AddDict( T_Sys_Dict dict )
+        {
+            MsgEntity me = new MsgEntity();
+            if ( dict == null || string.IsNullOrEmpty( dict.DICT_NAME ) )
+            {
+                me.MsgCode = MsgEntity.MsgCodeEnum.Failure;
+                me.MsgDes = "字典名称不能为空";
+                return me;
+            }
+            //查找关键字是否有相同值
+            int count = dao.Count<T_Sys_Dict>(Predicates.Field<T_Sys_Dict>(f=>f.DICT_NAME,Operator.Eq,dict.DICT_NAME));
+            if ( count > 0 )
+            {
+                me.MsgCode = MsgEntity.MsgCodeEnum.Failure;
+                me.MsgDes = "字典名称重复";
+                return me;
+            }
+            dynamic result = dao.Insert<T_Sys_Dict>( dict );
+            if(result!=null)
+            {
+                me.MsgCode = MsgEntity.MsgCodeEnum.Success;
+                me.MsgDes = MsgEntity.MsgCodeEnum.Success.GetDescription();
+            }
+            return me;
+        }
+
     }
 }

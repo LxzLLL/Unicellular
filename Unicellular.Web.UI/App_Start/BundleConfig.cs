@@ -21,11 +21,16 @@ namespace Unicellular.Web.UI
             bundles.Add( new StyleBundle( "~/Bootstrap/css" ).Include(
                       "~/Content/bootstrap.css",
                       "~/Content/font-awesome.min.css",
-                      "~/Content/ionicons.min.css" ) );
+                      "~/Content/ionicons.min.css",
+                      "~/Scripts/Plugins/toastr/toastr.min.css"
+                      ) );
             //bootstrapjs
             bundles.Add( new ScriptBundle( "~/bundles/bootstrap" ).Include(
                        "~/Scripts/bootstrap.js",
-                       "~/Scripts/respond.js" ) );
+                       "~/Scripts/respond.js",
+                       "~/Scripts/Plugins/toastr/toastr.js",
+                       "~/Scripts/UITemplate/toastr/defaultOption.js"
+                       ) );
             #endregion
 
             //页面主题样式

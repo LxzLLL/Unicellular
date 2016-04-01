@@ -46,6 +46,10 @@
     <Compile Include="System\SysDictService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\XLToolLibrary\XLToolLibrary\XLToolLibrary\XLToolLibrary.csproj">
+      <Project>{aa0865de-b6d0-4fc6-af67-9fa4e968acad}</Project>
+      <Name>XLToolLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Unicellular.DataAccess\Unicellular.DataAccess.csproj">
       <Project>{e0f7ca7c-9d62-439a-b998-b7d59b3173b5}</Project>
       <Name>Unicellular.DataAccess</Name>

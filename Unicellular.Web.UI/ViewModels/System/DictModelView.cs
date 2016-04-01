@@ -11,13 +11,9 @@ namespace Unicellular.Web.UI.ViewModels.System
     /// </summary>
     public class DictModelView
     {
-        [Display(Name ="ID")]
         public string ID { get; set; }
-        [Display(Name ="DICT_CODE")]
         public string DICT_CODE { get; set; }
-        [Display( Name = "DICT_NAME" )]
         public string DICT_NAME { get; set; }
-        [Display( Name = "DICT_DES" )]
         public string DICT_DES { get; set; }
     }
 }

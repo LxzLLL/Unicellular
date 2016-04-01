@@ -193,6 +193,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\System\DictModelView.cs" />
+    <Compile Include="ViewModels\ViewMsgModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdminLTE-2.3.0\dist\css\AdminLTE.css" />
@@ -1218,6 +1219,10 @@
     <Content Include="Scripts\Plugins\bsValidator\js\language\vi_VN.js" />
     <Content Include="Scripts\Plugins\bsValidator\js\language\zh_CN.js" />
     <Content Include="Scripts\Plugins\bsValidator\js\language\zh_TW.js" />
+    <Content Include="Scripts\Plugins\toastr\toastr.css" />
+    <Content Include="Scripts\Plugins\toastr\toastr.js" />
+    <Content Include="Scripts\Plugins\toastr\toastr.min.css" />
+    <Content Include="Scripts\Plugins\toastr\toastr.min.js" />
     <Content Include="Scripts\UITemplate\JqueryUI\JqueryDataTable.js" />
     <Content Include="Scripts\UITemplate\Readme.txt" />
     <Content Include="Scripts\jquery-1.11.0.js" />
@@ -1228,6 +1233,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Dict\Views.js" />
+    <Content Include="Scripts\UITemplate\toastr\defaultOption.js" />
     <Content Include="Scripts\XLBase.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -1248,6 +1254,7 @@
     <Content Include="Views\Dict\Views.cshtml" />
     <Content Include="Views\Shared\_ContentLayout.cshtml" />
     <Content Include="Scripts\Plugins\bsDialog\less\bootstrap-dialog.less" />
+    <Content Include="Scripts\Plugins\toastr\toastr.js.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\XLToolLibrary\XLToolLibrary\XLToolLibrary\XLToolLibrary.csproj">

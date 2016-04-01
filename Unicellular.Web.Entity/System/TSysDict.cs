@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Unicellular.Web.Entity.System
 {
@@ -58,7 +55,8 @@ namespace Unicellular.Web.Entity.System
         /// <summary>
         ///此条数据创建日期
         /// </summary>
-        public DateTime C_DATA_TIME
+        [JsonIgnore]
+        public DateTime? C_DATA_TIME
         {
             get;
             set;
@@ -67,6 +65,7 @@ namespace Unicellular.Web.Entity.System
         /// <summary>
         ///创建数据的用户ID
         /// </summary>
+        [JsonIgnore]
         public string C_DATA_UID
         {
             get;
@@ -76,7 +75,8 @@ namespace Unicellular.Web.Entity.System
         /// <summary>
         ///此条数据更新日期
         /// </summary>
-        public DateTime U_DATA_TIME
+        [JsonIgnore]
+        public DateTime? U_DATA_TIME
         {
             get;
             set;
@@ -85,6 +85,7 @@ namespace Unicellular.Web.Entity.System
         /// <summary>
         ///更新数据的用户ID
         /// </summary>
+        [JsonIgnore]
         public string U_DATA_UID
         {
             get;
@@ -94,6 +95,7 @@ namespace Unicellular.Web.Entity.System
         /// <summary>
         ///预留1
         /// </summary>
+        [JsonIgnore]
         public string RESERVE1
         {
             get;
@@ -103,6 +105,7 @@ namespace Unicellular.Web.Entity.System
         /// <summary>
         ///预留2
         /// </summary>
+        [JsonIgnore]
         public string RESERVE2
         {
             get;
@@ -112,6 +115,7 @@ namespace Unicellular.Web.Entity.System
         /// <summary>
         ///预留3
         /// </summary>
+        [JsonIgnore]
         public string RESERVE3
         {
             get;
