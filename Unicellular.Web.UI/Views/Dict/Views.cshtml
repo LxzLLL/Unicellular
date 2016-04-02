@@ -24,7 +24,7 @@
         </div>
     </div>*@
 
-<div class="rows" style="padding:0px;">
+<div class="row" style="padding:0px;">
 
     <div class="col-sm-6">
         <div class="box">
@@ -120,6 +120,56 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
+<!--字典项表弹出框-->
+<div class="modal fade" id="modal_dictitem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" data-bind="text:js_Form_Title"></h4>
+            </div>
+            <div class="modal-body">
+                <!--字典项表单组-->
+                <form id="dictItemForm">
+                    <div class="form-group">
+                        <label for="DI_CODE">字典项编码</label>
+                        <input type="text" class="form-control required" id="DI_CODE" name="DI_CODE"
+                               placeholder="请输入字典项编码，最大32个字符"
+                               data-bv-notempty
+                               data-bv-notempty-message="不能为空"
+                               maxlength=32
+                               data-bind="value:DI_CODE">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="DI_NAME">字典项名称</label>
+                        <input type="text" class="form-control" id="DI_NAME" name="DI_NAME"
+                               placeholder="请输入字典项名称，最大64个字符"
+                               data-bv-notempty
+                               data-bv-notempty-message="不能为空"
+                               maxlength=64
+                               data-bind="value:DI_NAME">
+                    </div>
+                    <div class="form-group">
+                        <label for="DI_DES">字典项描述</label>
+                        <textarea class="form-control" id="DI_DES" name="DI_DES"
+                                  placeholder="请输入字典项描述，最大256个字符"
+                                  rows="3"
+                                  maxlength=256
+                                  data-bind="value:DI_DES"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="btnDictItemSave">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 @*</div>*@
 
 @section ChildPageJs{

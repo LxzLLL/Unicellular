@@ -5,7 +5,7 @@
         "debug": false,
         "newestOnTop": false,
         "progressBar": true,
-        "positionClass": "toast-top-center",
+        "positionClass": "toast-bottom-center",
         "preventDuplicates": false,
         "showDuration": "300",
         "hideDuration": "1000",

@@ -22,6 +22,19 @@ namespace Unicellular.Web.BLL.System
             dao = new DAOBase();
         }
 
+        #region 字典
+
+        /// <summary>
+        /// 根据id获取字典
+        /// </summary>
+        /// <param name="dictId"></param>
+        /// <returns></returns>
+        public T_Sys_Dict GetDict(string dictId)
+        {
+            return dao.GetById<T_Sys_Dict>( dictId );
+        }
+
+
         /// <summary>
         /// 获取全部dict列表
         /// </summary>
@@ -70,8 +83,109 @@ namespace Unicellular.Web.BLL.System
             return dicts;
         }
 
+        /// <summary>
+        /// 添加字典
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <returns></returns>
+        public MsgEntity AddDict( T_Sys_Dict dict )
+        {
+            MsgEntity me = new MsgEntity();
+            if ( dict == null || string.IsNullOrEmpty( dict.DICT_CODE ) )
+            {
+                me.MsgCode = MsgEntity.MsgCodeEnum.Failure;
+                me.MsgDes = "字典编码不能为空";
+                return me;
+            }
+            //查找关键字是否有相同值
+            int count = dao.Count<T_Sys_Dict>(Predicates.Field<T_Sys_Dict>(f=>f.DICT_CODE,Operator.Eq,dict.DICT_CODE));
+            if ( count > 0 )
+            {
+                me.MsgCode = MsgEntity.MsgCodeEnum.Failure;
+                me.MsgDes = "字典编码重复";
+                return me;
+            }
+            dynamic result = dao.Insert<T_Sys_Dict>( dict );
+            if(result!=null)
+            {
+                me.MsgCode = MsgEntity.MsgCodeEnum.Success;
+                me.MsgDes = MsgEntity.MsgCodeEnum.Success.GetDescription();
+            }
+            return me;
+        }
 
 
+        /// <summary>
+        /// 修改字典
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <returns></returns>
+        public MsgEntity EditDict( T_Sys_Dict dict )
+        {
+            MsgEntity me = new MsgEntity();
+            if ( dict == null || string.IsNullOrEmpty( dict.DICT_CODE ) )
+            {
+                me.MsgCode = MsgEntity.MsgCodeEnum.Failure;
+                me.MsgDes = "字典编码不能为空";
+                return me;
+            }
+            //查找关键字是否有相同值（不同id的dict_code不能相同）
+            PredicateGroup pg = new PredicateGroup { Operator = GroupOperator.And, Predicates = new List<IPredicate>() };
+            pg.Predicates.Add( Predicates.Field<T_Sys_Dict>( f => f.DICT_CODE, Operator.Eq, dict.DICT_CODE ) );
+            pg.Predicates.Add( Predicates.Field<T_Sys_Dict>( f => f.ID, Operator.Eq, dict.ID, true ) );
+            int count = dao.Count<T_Sys_Dict>(pg);
+            if ( count > 0 )
+            {
+                me.MsgCode = MsgEntity.MsgCodeEnum.Failure;
+                me.MsgDes = "字典编码重复";
+                return me;
+            }
+            bool result = false;
+            try
+            {
+                result = dao.Update<T_Sys_Dict>( dict );
+                me.MsgCode = MsgEntity.MsgCodeEnum.Success;
+                me.MsgDes = "字典编辑成功";
+            }
+            catch(Exception ex )
+            {
+                me.MsgCode = MsgEntity.MsgCodeEnum.Failure;
+                me.MsgDes = ex.Message;
+            }
+            return me;
+        }
+
+        /// <summary>
+        /// 根据ID删除字典
+        /// </summary>
+        /// <param name="dictId"></param>
+        /// <returns></returns>
+        public MsgEntity DelDict(string dictId )
+        {
+            MsgEntity me = new MsgEntity();
+            if ( string.IsNullOrEmpty( dictId ))
+            {
+                me.MsgCode = MsgEntity.MsgCodeEnum.Failure;
+                me.MsgDes = "字典ID不存在";
+                return me;
+            }
+            try
+            {
+                dao.Delete<T_Sys_Dict>( dictId );
+                me.MsgCode = MsgEntity.MsgCodeEnum.Success;
+                me.MsgDes = "字典删除成功";
+            }
+            catch ( Exception ex )
+            {
+                me.MsgCode = MsgEntity.MsgCodeEnum.Failure;
+                me.MsgDes = ex.Message;
+            }
+            return me;   
+        }
+
+        #endregion
+
+        #region 字典项
         /// <summary>
         /// 根据前台传递的参数，对"字典项"数据进行分页，搜索
         /// </summary>
@@ -82,13 +196,24 @@ namespace Unicellular.Web.BLL.System
         /// <param name="sortOrder">排序标识asc或desc</param>
         /// <param name="search">搜索的字符串</param>
         /// <returns></returns>
-        public List<T_Sys_DictItem> GetDictItemPages( int pageNumber, int pageSize, out long number, string sort = null, string sortOrder = null, string search = null )
+        public List<T_Sys_DictItem> GetDictItemPages( int pageNumber, int pageSize, out long number, string sort = null, string sortOrder = null, string search = null, string dictId = null )
         {
             //创建谓词
-            IFieldPredicate predicate = null;
+            //IFieldPredicate predicate = null;
+            PredicateGroup pg = null;
+            List < IPredicate >  predicates= new List<IPredicate>();
+            //PredicateGroup pg = new PredicateGroup {Operator=GroupOperator.And,Predicates=new List<IPredicate>() };
             if ( !string.IsNullOrEmpty( search ) )
             {
-                predicate = Predicates.Field<T_Sys_DictItem>( f => f.DI_NAME, Operator.Like, "%" + search + "%" );
+                predicates.Add(Predicates.Field<T_Sys_DictItem>( f => f.DI_NAME, Operator.Like, "%" + search + "%" ));
+            }
+            if( !string.IsNullOrEmpty( dictId ) )
+            {
+                predicates.Add( Predicates.Field<T_Sys_DictItem>( f => f.DICT_ID, Operator.Eq, dictId ) );
+            }
+            if ( predicates.Count > 0 )
+            {
+                pg = new PredicateGroup { Operator = GroupOperator.And, Predicates = predicates };
             }
             IList<ISort> sorts = new List<ISort>();
             //创建排序
@@ -101,15 +226,29 @@ namespace Unicellular.Web.BLL.System
             {
                 sorts.Add( new Sort { PropertyName = sort, Ascending = sortOrder == "asc" ? true : false } );
             }
-            List < T_Sys_DictItem > dictitems =dao.GetPageList<T_Sys_DictItem>(pageNumber,pageSize,out number,predicate,sorts).ToList();
+            List < T_Sys_DictItem > dictitems =dao.GetPageList<T_Sys_DictItem>(pageNumber,pageSize,out number,pg,sorts).ToList();
             return dictitems;
         }
 
+        /// <summary>
+        /// 获取全部字典项列表
+        /// </summary>
+        /// <returns></returns>
+        //public List<T_Sys_DictItem> GetDictItem()
+        //{
+        //    List < T_Sys_DictItem > dictitems = dao.GetList<T_Sys_DictItem>().ToList();
+        //    return dictitems == null ? new List<T_Sys_DictItem>() : dictitems;
+        //}
 
-        public List<T_Sys_DictItem> GetDictItem()
+
+        /// <summary>
+        /// 根据id获取字典
+        /// </summary>
+        /// <param name="dictId"></param>
+        /// <returns></returns>
+        public T_Sys_DictItem GetDictItem( string dictId )
         {
-            List < T_Sys_DictItem > dictitems = dao.GetList<T_Sys_DictItem>().ToList();
-            return dictitems == null ? new List<T_Sys_DictItem>() : dictitems;
+            return dao.GetById<T_Sys_DictItem>( dictId );
         }
 
         /// <summary>
@@ -117,25 +256,25 @@ namespace Unicellular.Web.BLL.System
         /// </summary>
         /// <param name="dict"></param>
         /// <returns></returns>
-        public MsgEntity AddDict( T_Sys_Dict dict )
+        public MsgEntity AddDictItem( T_Sys_DictItem dictItem )
         {
             MsgEntity me = new MsgEntity();
-            if ( dict == null || string.IsNullOrEmpty( dict.DICT_NAME ) )
+            if ( dictItem == null || string.IsNullOrEmpty( dictItem.DI_CODE ) )
             {
                 me.MsgCode = MsgEntity.MsgCodeEnum.Failure;
-                me.MsgDes = "字典名称不能为空";
+                me.MsgDes = "字典项编码不能为空";
                 return me;
             }
             //查找关键字是否有相同值
-            int count = dao.Count<T_Sys_Dict>(Predicates.Field<T_Sys_Dict>(f=>f.DICT_NAME,Operator.Eq,dict.DICT_NAME));
+            int count = dao.Count<T_Sys_DictItem>(Predicates.Field<T_Sys_DictItem>(f=>f.DI_CODE,Operator.Eq,dictItem.DI_CODE));
             if ( count > 0 )
             {
                 me.MsgCode = MsgEntity.MsgCodeEnum.Failure;
-                me.MsgDes = "字典名称重复";
+                me.MsgDes = "字典项编码重复";
                 return me;
             }
-            dynamic result = dao.Insert<T_Sys_Dict>( dict );
-            if(result!=null)
+            dynamic result = dao.Insert<T_Sys_DictItem>( dictItem );
+            if ( result != null )
             {
                 me.MsgCode = MsgEntity.MsgCodeEnum.Success;
                 me.MsgDes = MsgEntity.MsgCodeEnum.Success.GetDescription();
@@ -143,5 +282,75 @@ namespace Unicellular.Web.BLL.System
             return me;
         }
 
+
+        /// <summary>
+        /// 修改字典
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <returns></returns>
+        public MsgEntity EditDictItem( T_Sys_DictItem dictItem )
+        {
+            MsgEntity me = new MsgEntity();
+            if ( dictItem == null || string.IsNullOrEmpty( dictItem.DI_CODE ) )
+            {
+                me.MsgCode = MsgEntity.MsgCodeEnum.Failure;
+                me.MsgDes = "字典项编码不能为空";
+                return me;
+            }
+            //查找关键字是否有相同值（不同id的dict_code不能相同）
+            PredicateGroup pg = new PredicateGroup { Operator = GroupOperator.And, Predicates = new List<IPredicate>() };
+            pg.Predicates.Add( Predicates.Field<T_Sys_DictItem>( f => f.DI_CODE, Operator.Eq, dictItem.DI_CODE ) );
+            pg.Predicates.Add( Predicates.Field<T_Sys_DictItem>( f => f.ID, Operator.Eq, dictItem.ID, true ) );
+            int count = dao.Count<T_Sys_DictItem>(pg);
+            if ( count > 0 )
+            {
+                me.MsgCode = MsgEntity.MsgCodeEnum.Failure;
+                me.MsgDes = "字典项编码重复";
+                return me;
+            }
+            bool result = false;
+            try
+            {
+                result = dao.Update<T_Sys_DictItem>( dictItem );
+                me.MsgCode = MsgEntity.MsgCodeEnum.Success;
+                me.MsgDes = "字典项编辑成功";
+            }
+            catch ( Exception ex )
+            {
+                me.MsgCode = MsgEntity.MsgCodeEnum.Failure;
+                me.MsgDes = ex.Message;
+            }
+            return me;
+        }
+
+        /// <summary>
+        /// 根据ID删除字典
+        /// </summary>
+        /// <param name="dictId"></param>
+        /// <returns></returns>
+        public MsgEntity DelDictItem( string dictItemId )
+        {
+            MsgEntity me = new MsgEntity();
+            if ( string.IsNullOrEmpty( dictItemId ) )
+            {
+                me.MsgCode = MsgEntity.MsgCodeEnum.Failure;
+                me.MsgDes = "字典项ID不存在";
+                return me;
+            }
+            try
+            {
+                dao.Delete<T_Sys_DictItem>( dictItemId );
+                me.MsgCode = MsgEntity.MsgCodeEnum.Success;
+                me.MsgDes = "字典项删除成功";
+            }
+            catch ( Exception ex )
+            {
+                me.MsgCode = MsgEntity.MsgCodeEnum.Failure;
+                me.MsgDes = ex.Message;
+            }
+            return me;
+        }
+
+        #endregion
     }
 }

@@ -311,6 +311,33 @@ var XLBase = null;
             //getJSONP('http://localhost:8888/', function (response) {
             //    alert(response.name);
             //});
+        },
+
+        /*-------------------- jquery Ajax操作 --------------------*/
+        //依赖toastr组件
+        //同步ajax，post/get方式(默认post)，返回json对象
+        ajaxBackJson: function (urlPath,method, dataJson, successFun) {
+            if (!dataJson) {
+                dataJson = {};
+            }
+            if (!method) {
+                method = "POST";
+            }
+            $.ajax({
+                cache: false,
+                async: false,
+                type: method,
+                url: urlPath,
+                dataType: "json",
+                data: dataJson,
+                success: function (data, textStatus) {
+                    successFun(data, textStatus);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    //返回失败提示
+                    toastr.error(textStatus, "异常");
+                }
+            });
         }
     };
 })();
