@@ -137,9 +137,9 @@ namespace Unicellular.Web.UI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult EditDictItem( string data )
+        public JsonResult EditDictItem( T_Sys_DictItem dictItem )
         {
-            T_Sys_DictItem dictItem = JsonHelper.ConvertJsonString2Object<T_Sys_DictItem>(data);
+            //T_Sys_DictItem dictItem = JsonHelper.ConvertJsonString2Object<T_Sys_DictItem>(data);
             MsgEntity me = dictService.EditDictItem(dictItem);
             return this.Json( me, JsonRequestBehavior.DenyGet );
         }

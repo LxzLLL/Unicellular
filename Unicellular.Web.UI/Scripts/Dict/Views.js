@@ -467,7 +467,8 @@ function DictItemSave() {
         XLBase.ajaxBackJson(
             "Dict/EditDictItem",
             "POST",
-            { data: objJson },
+            //{ data: objJson },
+            JSON.parse( objJson),
             function (data, textStatus) {
                 //提示成功
                 if (data.MsgCode == 0) {
