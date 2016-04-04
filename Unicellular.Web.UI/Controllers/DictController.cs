@@ -4,6 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+// mvc5中已实现AttributeRouting的功能（[Route(...)]）
+//using AttributeRouting;
+//using AttributeRouting.Web.Mvc;
+
 using Unicellular.Web.BLL.System;
 using Unicellular.Web.Entity.System;
 using Unicellular.Web.Entity;
@@ -36,7 +40,7 @@ namespace Unicellular.Web.UI.Controllers
             List<T_Sys_Dict> dicts = dictService.GetDictPages(pageNumber,pageSize,out number,sort,sortOrder,search);
             return this.Json( new { total = number, rows = dicts }, JsonRequestBehavior.AllowGet );
         }
-       
+
 
         /// <summary>
         /// 根据id返回字典json类型数据
