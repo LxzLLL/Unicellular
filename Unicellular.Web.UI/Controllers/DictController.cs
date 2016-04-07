@@ -17,7 +17,7 @@ namespace Unicellular.Web.UI.Controllers
 {
     public class DictController : Controller
     {
-        private SysDictService dictService = new SysDictService();
+        private readonly SysDictService dictService = new SysDictService();
 
         public ActionResult Views()
         {

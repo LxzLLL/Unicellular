@@ -7,21 +7,21 @@ using System.Threading.Tasks;
 namespace Unicellular.Web.Entity.Ecommerce
 {
     /// <summary>
-    /// TEcKeyWords 电子商务关键词
+    /// 关键词分类表
     /// </summary>
-    public class T_EC_KeyWords
+    public class T_EC_KWCategory
     {
 
         /// <summary>
-        /// TEcKeyWords 电子商务关键词构造函数
+        /// 关键词分类表构造函数
         /// </summary>
-        public T_EC_KeyWords()
+        public T_EC_KWCategory()
         {
             ///Todo
         }
 
         /// <summary>
-        ///ID
+        ///主键
         /// </summary>
         public string ID
         {
@@ -30,63 +30,18 @@ namespace Unicellular.Web.Entity.Ecommerce
         }
 
         /// <summary>
-        ///平台类型，字典项存储（PLAT_TYPE）
+        ///关键词分类编码
         /// </summary>
-        public string PLAT_TYPE
+        public string CATEGORY_CODE
         {
             get;
             set;
         }
 
         /// <summary>
-        ///关键词类型，字典项存储（KEYWORD_TYPE）
+        ///关键词分类名称
         /// </summary>
-        public string KEYWORD_TYPE
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        ///分类ID
-        /// </summary>
-        public string GOODS_TYPE
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        ///关键词
-        /// </summary>
-        public string KEY_WORD
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        ///关键词的中文描述
-        /// </summary>
-        public string KW_CN
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        ///关键词最优产品描述
-        /// </summary>
-        public string KW_DES
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        ///平台检索量
-        /// </summary>
-        public int KW_VOLUME
+        public string CATEGORY_NAME
         {
             get;
             set;
@@ -138,6 +93,15 @@ namespace Unicellular.Web.Entity.Ecommerce
         }
 
         /// <summary>
+        ///预留2
+        /// </summary>
+        public string RESERVE2
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         ///预留3
         /// </summary>
         public string RESERVE3
@@ -147,12 +111,23 @@ namespace Unicellular.Web.Entity.Ecommerce
         }
 
         /// <summary>
-        ///预留2
+        ///父ID，如果是根节点，则为0
         /// </summary>
-        public string RESERVE2
+        public string PARENT_ID
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        ///分类描述
+        /// </summary>
+        public string CATEGORY_DES
         {
             get;
             set;
         }
     }
+
 }
+

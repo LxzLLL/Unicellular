@@ -188,7 +188,8 @@ function fn_editDict() {
         { dictId: selectedRow.ID },                                         //dataJson
         function (data, textStatus) {                                   //successFun
             formDictValidator.resetForm(true);              //清空上次验证状态
-            ko.mapping.fromJSON(JSON.stringify(data), {}, dictInstence);
+            ko.mapping.fromJS(ko.mapping.toJS(new viewModelDict()), {}, dictInstence);//必须使用，否则会出现绑定不上的问题
+            ko.mapping.fromJSON(JSON.stringify(data),{}, dictInstence);
             dictInstence.js_Form_Title("字典编辑");
             dictInstence.js_Form_Operation("edit");
             $("#modal_dict").modal("show");
@@ -383,6 +384,7 @@ function fn_editDictItem() {
         { dictItemId: selectedRow.ID },               //dataJson
         function (data, textStatus) {                                   //successFun
             formDictItemValidator.resetForm(true);              //清空上次验证状态
+            ko.mapping.fromJS(ko.mapping.toJS(new viewModelDictItem()), {}, dictItemInstence);//必须使用，否则会出现绑定不上的问题
             ko.mapping.fromJSON(JSON.stringify(data), {}, dictItemInstence);
             dictItemInstence.js_Form_Title("字典项编辑");
             dictItemInstence.js_Form_Operation("edit");

@@ -23,7 +23,7 @@ namespace Unicellular.Web.Entity.Ecommerce
         /// <summary>
         ///表ID
         /// </summary>
-        public int ID
+        public string ID
         {
             get;
             set;
@@ -59,7 +59,7 @@ namespace Unicellular.Web.Entity.Ecommerce
         /// <summary>
         ///此条数据创建日期
         /// </summary>
-        public DateTime C_DATA_TIME
+        public DateTime? C_DATA_TIME
         {
             get;
             set;
@@ -77,7 +77,7 @@ namespace Unicellular.Web.Entity.Ecommerce
         /// <summary>
         ///此条数据更新日期
         /// </summary>
-        public DateTime U_DATA_TIME
+        public DateTime? U_DATA_TIME
         {
             get;
             set;
