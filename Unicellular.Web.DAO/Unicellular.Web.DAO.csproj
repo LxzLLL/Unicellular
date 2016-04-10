@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAOBase.cs" />
+    <Compile Include="Ecommerce\KeyWordDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\SysDictDao.cs" />
   </ItemGroup>
@@ -53,10 +54,12 @@
       <Project>{b34c9855-44d9-43b6-b69f-e068c8e390b3}</Project>
       <Name>Unicellular.ORM</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Unicellular.Web.Entity\Unicellular.Web.Entity.csproj">
+      <Project>{727159be-9b40-4ead-b373-e7126bb040f2}</Project>
+      <Name>Unicellular.Web.Entity</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Ecommerce\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

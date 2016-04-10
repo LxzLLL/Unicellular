@@ -78,6 +78,7 @@
     <Compile Include="DapperExtensions\Sql\SqlGenerator.cs" />
     <Compile Include="DapperExtensions\Sql\SqliteDialect.cs" />
     <Compile Include="DapperExtensions\Sql\SqlServerDialect.cs" />
+    <Compile Include="Dapper\SqlBuilder.cs" />
     <Compile Include="Dapper\SqlMapper.cs" />
     <Compile Include="Dapper\SqlMapperAsync.cs" />
     <Compile Include="IDataRepository.cs" />

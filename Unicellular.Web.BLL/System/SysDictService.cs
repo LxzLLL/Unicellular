@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
 
 using Unicellular.Web.DAO;
 using Unicellular.Web.Entity;
@@ -15,7 +16,7 @@ namespace Unicellular.Web.BLL.System
     /// </summary>
     public class SysDictService
     {
-        private DAOBase dao;
+        private readonly DAOBase dao;
 
         public SysDictService()
         {
@@ -34,7 +35,7 @@ namespace Unicellular.Web.BLL.System
             return dao.GetById<T_Sys_Dict>( dictId );
         }
 
-
+        
         /// <summary>
         /// 获取全部dict列表
         /// </summary>
@@ -196,7 +197,7 @@ namespace Unicellular.Web.BLL.System
         /// <param name="sortOrder">排序标识asc或desc</param>
         /// <param name="search">搜索的字符串</param>
         /// <returns></returns>
-        public List<T_Sys_DictItem> GetDictItemPages( int pageNumber, int pageSize, out long number, string sort = null, string sortOrder = null, string search = null, string dictId = null )
+        public List<T_Sys_DictItem> GetDictItemPages( int pageNumber, int pageSize, out long number, string sort = null, string sortOrder = null, string search = null, string dictCode = null )
         {
             //创建谓词
             //IFieldPredicate predicate = null;
@@ -207,9 +208,9 @@ namespace Unicellular.Web.BLL.System
             {
                 predicates.Add(Predicates.Field<T_Sys_DictItem>( f => f.DI_NAME, Operator.Like, "%" + search + "%" ));
             }
-            if( !string.IsNullOrEmpty( dictId ) )
+            if( !string.IsNullOrEmpty( dictCode ) )
             {
-                predicates.Add( Predicates.Field<T_Sys_DictItem>( f => f.DICT_ID, Operator.Eq, dictId ) );
+                predicates.Add( Predicates.Field<T_Sys_DictItem>( f => f.DICT_CODE, Operator.Eq, dictCode ) );
             }
             if ( predicates.Count > 0 )
             {
@@ -219,7 +220,7 @@ namespace Unicellular.Web.BLL.System
             //创建排序
             if ( sort == null )
             {
-                sorts.Add( new Sort { PropertyName = "DICT_ID", Ascending = sortOrder == "asc" ? true : false } );
+                sorts.Add( new Sort { PropertyName = "DICT_CODE", Ascending = sortOrder == "asc" ? true : false } );
                 sorts.Add( new Sort { PropertyName = "DI_CODE", Ascending = sortOrder == "asc" ? true : false } );
             }
             else
@@ -229,16 +230,6 @@ namespace Unicellular.Web.BLL.System
             List < T_Sys_DictItem > dictitems =dao.GetPageList<T_Sys_DictItem>(pageNumber,pageSize,out number,pg,sorts).ToList();
             return dictitems;
         }
-
-        /// <summary>
-        /// 获取全部字典项列表
-        /// </summary>
-        /// <returns></returns>
-        //public List<T_Sys_DictItem> GetDictItem()
-        //{
-        //    List < T_Sys_DictItem > dictitems = dao.GetList<T_Sys_DictItem>().ToList();
-        //    return dictitems == null ? new List<T_Sys_DictItem>() : dictitems;
-        //}
 
 
         /// <summary>
@@ -351,6 +342,68 @@ namespace Unicellular.Web.BLL.System
             return me;
         }
 
+
+        /// <summary>
+        /// 根据动态对象过滤获取字典项
+        /// </summary>
+        /// <param name="dictItem"></param>
+        /// <returns></returns>
+        public List<T_Sys_DictItem> GetDictItemByEntity( object dictItem )
+        {
+            List<T_Sys_DictItem> dictitems = new List<T_Sys_DictItem>();
+            if ( dictItem == null )
+            {
+                return dictitems;
+            }
+            IList<ISort> sorts = new List<ISort>();
+            sorts.Add( new Sort { PropertyName = "DI_NAME", Ascending = true } );
+            return dao.GetList<T_Sys_DictItem>( dictItem, sorts ).ToList();
+        }
+
         #endregion
+
+        #region 根据字典Code获取所有字典项  未用
+        /// <summary>
+        /// 根据字典编码获取所有字典项
+        /// </summary>
+        /// <param name="sdictCode"></param>
+        /// <returns></returns>
+        public List<T_Sys_DictItem> GetAllItemByDictCode( string sdictCode )
+        {
+            List<T_Sys_DictItem>  dictitems= new List<T_Sys_DictItem>();
+            if ( string.IsNullOrEmpty( sdictCode ) )
+            {
+                return dictitems;
+            }
+            IFieldPredicate predicate = Predicates.Field<T_Sys_DictItem>(f=>f.DICT_CODE,Operator.Eq,sdictCode);
+            IList<ISort> sorts = new List<ISort>();
+            sorts.Add( new Sort {PropertyName="DI_NAME",Ascending=true });
+            dictitems = dao.GetList<T_Sys_DictItem>( predicate, sorts ).ToList();
+            return dictitems;
+        }
+        #endregion
+
+
+        /// <summary>
+        /// 获取适合dropdownlist的字典数据
+        /// </summary>
+        /// <returns></returns>
+        public List<SelectListItem> GetSelectListItemByObj(object entity)
+        {
+            List<SelectListItem> slis = new List<SelectListItem>();
+            //T_Sys_DictItem dictItem = new T_Sys_DictItem {DICT_CODE="PLAT_TYPE" };
+            List< T_Sys_DictItem> dictItems= this.GetDictItemByEntity( entity );
+            if ( dictItems != null && dictItems.Count > 0 )
+            {
+                var selectList = from di in dictItems
+                                 select new SelectListItem
+                                 {
+                                     Text = di.DI_NAME,
+                                     Value=di.ID
+                                 };
+                slis = selectList.ToList();
+            }
+            return slis;
+        }
     }
 }

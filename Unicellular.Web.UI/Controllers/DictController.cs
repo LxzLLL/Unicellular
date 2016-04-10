@@ -100,10 +100,10 @@ namespace Unicellular.Web.UI.Controllers
         /// <param name="sortOrder"></param>
         /// <param name="search"></param>
         /// <returns></returns>
-        public JsonResult GetDictItems( int pageNumber, int pageSize, string sort = null, string sortOrder = null, string search = null,string DICT_ID=null )
+        public JsonResult GetDictItems( int pageNumber, int pageSize, string sort = null, string sortOrder = null, string search = null,string DICT_CODE=null )
         {
             long number =0;
-            List<T_Sys_DictItem> dictItems = dictService.GetDictItemPages(pageNumber,pageSize,out number,sort,sortOrder,search,DICT_ID);
+            List<T_Sys_DictItem> dictItems = dictService.GetDictItemPages(pageNumber,pageSize,out number,sort,sortOrder,search,DICT_CODE);
             return this.Json( new { total = number, rows = dictItems }, JsonRequestBehavior.AllowGet );
             //return JsonHelper.ConvertObject2JsonString( new { data = dictitems } );
         }
@@ -157,5 +157,6 @@ namespace Unicellular.Web.UI.Controllers
 
 
         #endregion
+
     }
 }

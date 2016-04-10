@@ -4,86 +4,42 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+
+using Unicellular.Web.BLL.System;
+using Unicellular.Web.BLL.Ecommerce;
+using Unicellular.Web.Entity.Ecommerce;
+using Unicellular.Web.Entity.System;
+using Unicellular.Web.UI.ViewModels.Ecommerce;
+
 namespace Unicellular.Web.UI.Controllers
 {
     public class KeyWordsController : Controller
     {
+        private readonly SysDictService _dictService = new SysDictService();
+        private readonly KeyWordService _keywordService = new KeyWordService();
         // GET: KeyWords
         public ActionResult Index()
         {
+            ViewBag.PlatType = _dictService.GetSelectListItemByObj( new { DICT_CODE = "PLAT_TYPE" } );
+            ViewBag.KeyWordType = _dictService.GetSelectListItemByObj( new { DICT_CODE = "KEYWORD_TYPE" } );
+            ViewBag.GoodsType = _dictService.GetSelectListItemByObj( new { DICT_CODE = "GOODS_TYPE" } );
             return View();
-        }
-
-        // GET: KeyWords/Details/5
-        public ActionResult Details(int id)
+        }       
+         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="sort"></param>
+        /// <param name="sortOrder"></param>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
+        public JsonResult GetKeyWords( int pageNumber, int pageSize, string sort = null, string sortOrder = null, T_EC_KeyWords keywordModel = null )
         {
-            return View();
-        }
-
-        // GET: KeyWords/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: KeyWords/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: KeyWords/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: KeyWords/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: KeyWords/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: KeyWords/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            long number =0;
+            List<T_EC_KeyWords> keywords = _keywordService.GetKeyWordsPages(pageNumber,pageSize,out number,sort,sortOrder,keywordModel);
+            return this.Json( new { total = number, rows = keywords }, JsonRequestBehavior.AllowGet );
         }
     }
 }

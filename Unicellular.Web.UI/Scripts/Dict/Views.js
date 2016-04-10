@@ -15,7 +15,7 @@ var dictInstence = new viewModelDict();
 var viewModelDictItem = function(){
     var self = this;
     self.ID = ko.observable();
-    self.DICT_ID = ko.observable();
+    self.DICT_CODE = ko.observable();
     self.DI_CODE = ko.observable();
     self.DI_NAME = ko.observable();
     self.DI_DES = ko.observable();
@@ -328,10 +328,10 @@ function initGridDictItem() {
 };
 //得到dictItem查询的参数
 function dictItemParams(params) {
-    var dictId = null;
+    var dictCode = null;
     var selectedRow = fn_dictRowSelected();
-    if (selectedRow && selectedRow.ID) {
-        dictId = selectedRow.ID;
+    if (selectedRow && selectedRow.DICT_CODE) {
+        dictCode = selectedRow.DICT_CODE;
     }
     var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
         pageNumber: params.pageNumber,   //页码
@@ -339,7 +339,7 @@ function dictItemParams(params) {
         sort: params.sort,                             //排序列名
         sortOrder: params.order,                 //排位命令（desc，asc）
         search: params.search,                      //搜索文本
-        DICT_ID: dictId
+        DICT_CODE: dictCode
     };
     return temp;
 };
@@ -358,7 +358,7 @@ function fn_addDictItem() {
     //先判断dict是否选择
     
     var selectedRow = fn_dictRowSelected();
-    if (!selectedRow || !selectedRow.ID) {
+    if (!selectedRow || !selectedRow.DICT_CODE) {
         toastr.warning("未选择字典", "警告");
         return;
     }
@@ -442,7 +442,7 @@ function DictItemSave() {
     //form的json化
     //var objJson = ko.mapping.toJSON(dictItemInstence, ignorMapping);
     if (dictItemInstence.js_Form_Operation() == "add") {
-        dictItemInstence.DICT_ID(fn_dictRowSelected().ID);              //新增时，需要dict的ID
+        dictItemInstence.DICT_CODE(fn_dictRowSelected().DICT_CODE);              //新增时，需要dict的CODE
         var objJson = ko.mapping.toJSON(dictItemInstence, ignorMapping);              
         //ajax post
         XLBase.ajaxBackJson(

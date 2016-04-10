@@ -31,7 +31,7 @@ namespace Unicellular.Web.Entity.System
         /// <summary>
         ///字典表ID
         /// </summary>
-        public string DICT_ID
+        public string DICT_CODE
         {
             get;
             set;

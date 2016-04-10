@@ -167,7 +167,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\KeyWords\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AttributeRoutingConfig.cs" />
@@ -211,6 +210,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Ecommerce\KeyWordViewModel.cs" />
     <Compile Include="ViewModels\System\DictModelView.cs" />
     <Compile Include="ViewModels\ViewMsgModel.cs" />
   </ItemGroup>
@@ -1063,6 +1063,7 @@
     <None Include="Scripts\jquery-1.11.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\KeyWords\Index.js" />
     <Content Include="Scripts\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\knockout.mapping-latest.js" />
     <Content Include="Scripts\Plugins\bsDialog\css\bootstrap-dialog.css" />
@@ -1274,6 +1275,7 @@
     <Content Include="Views\Shared\_ContentLayout.cshtml" />
     <Content Include="Scripts\Plugins\bsDialog\less\bootstrap-dialog.less" />
     <Content Include="Scripts\Plugins\toastr\toastr.js.map" />
+    <Content Include="Views\KeyWords\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\XLToolLibrary\XLToolLibrary\XLToolLibrary\XLToolLibrary.csproj">

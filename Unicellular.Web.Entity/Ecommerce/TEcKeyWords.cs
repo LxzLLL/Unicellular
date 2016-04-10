@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
+using DapperExtensions.Mapper;
+using Unicellular.Web.Entity.System;
 namespace Unicellular.Web.Entity.Ecommerce
 {
     /// <summary>
@@ -11,7 +9,6 @@ namespace Unicellular.Web.Entity.Ecommerce
     /// </summary>
     public class T_EC_KeyWords
     {
-
         /// <summary>
         /// TEcKeyWords 电子商务关键词构造函数
         /// </summary>
@@ -32,11 +29,12 @@ namespace Unicellular.Web.Entity.Ecommerce
         /// <summary>
         ///平台类型，字典项存储（PLAT_TYPE）
         /// </summary>
-        public string PLAT_TYPE
-        {
-            get;
-            set;
-        }
+        public string PLAT_TYPE { get; set; }
+
+        /// <summary>
+        /// 平台类型名称
+        /// </summary>
+        public string PLAT_TYPE_NAME { get; set; }
 
         /// <summary>
         ///关键词类型，字典项存储（KEYWORD_TYPE）
@@ -46,6 +44,10 @@ namespace Unicellular.Web.Entity.Ecommerce
             get;
             set;
         }
+        /// <summary>
+        /// 关键词类型名称
+        /// </summary>
+        public string KEYWORD_TYPE_NAME { get; set; }
 
         /// <summary>
         ///分类ID
@@ -86,7 +88,7 @@ namespace Unicellular.Web.Entity.Ecommerce
         /// <summary>
         ///平台检索量
         /// </summary>
-        public int KW_VOLUME
+        public int? KW_VOLUME
         {
             get;
             set;
@@ -153,6 +155,21 @@ namespace Unicellular.Web.Entity.Ecommerce
         {
             get;
             set;
+        }
+    }
+
+    [Serializable]
+    public class T_EC_KeyWordsEntity : ClassMapper<T_EC_KeyWords>
+    {
+        /// <summary>
+        /// 对表T_EC_KeyWords重命名
+        /// </summary>
+        public T_EC_KeyWordsEntity()
+        {
+            base.Table( "TECKeyWords" );
+            Map( f => f.PLAT_TYPE_NAME ).Ignore();
+            Map( f => f.KEYWORD_TYPE_NAME ).Ignore();
+            AutoMap();
         }
     }
 }

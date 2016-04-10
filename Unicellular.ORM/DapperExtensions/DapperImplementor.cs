@@ -8,6 +8,9 @@ using Dapper;
 using DapperExtensions.Mapper;
 using DapperExtensions.Sql;
 
+/// <summary>
+/// update by Arvin 2016-04-10  转换错误，int-->long
+/// </summary>
 namespace DapperExtensions
 {
     public interface IDapperImplementor
@@ -243,7 +246,8 @@ namespace DapperExtensions
             }
             SqlMapper.GridReader grid = connection.QueryMultiple(pageSql.ToString(), dynamicParameters, transaction, commandTimeout, CommandType.Text);
             IEnumerable<T> list = grid.Read<T>();
-            allRowsCount = grid.Read<int>().Single();
+            //update by Arvin  转换错误，int-->long
+            allRowsCount = grid.Read<long>().Single();
             return list;
         }
 

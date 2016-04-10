@@ -210,11 +210,11 @@
                     <li class="header">HEADER</li>
                     <!-- Optionally, you can add icons to the links -->
                     <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-                    <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+                    <li><a href="#" id="keywords" data-link="KeyWords/Index"><i class="fa fa-link"></i> <span>关键词设置</span></a></li>
                     <li class="treeview">
-                        <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span> <i class="fa fa-angle-left pull-right"></i></a>
+                        <a href="#"><i class="fa fa-link"></i> <span>系统设置</span> <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
-                            <li><a id="demo" href="#" data-link="Dict/Views">菜单链接</a></li>
+                            <li><a id="dict" href="#" data-link="Dict/Views">字典配置</a></li>
                             <li><a  id="demo2" href="#" data-link="Home/Demo2">Demo2</a></li>
                         </ul>
                     </li>
@@ -266,7 +266,7 @@
     @RenderSection( "ChildPageJs", false )
 
     <script type="text/javascript">
-        $('.treeview-menu a').each(function () {
+        $('.sidebar-menu a').each(function () {
             //利用html的锚点标记来实现无刷新页面加载
             //this.onclick = function () {
             //    $.get("Home/Demo2", function (data) {
@@ -274,9 +274,11 @@
             //    });
             //};
             //利用jQuery.load()方法实现无刷新页面加载
-            this.onclick = function () {
-                $('#CustomContent').load($(this).data("link"));
-            };
+            if (typeof ($(this).attr("data-link")) !== "undefined") {
+                this.onclick = function () {
+                    $('#CustomContent').load($(this).data("link"));
+                };
+            }
         });
 
     </script>
