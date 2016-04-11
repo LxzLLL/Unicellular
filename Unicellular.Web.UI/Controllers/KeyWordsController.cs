@@ -16,6 +16,7 @@ namespace Unicellular.Web.UI.Controllers
     public class KeyWordsController : Controller
     {
         private readonly SysDictService _dictService = new SysDictService();
+        private readonly CategoryService _categoryService = new CategoryService();
         private readonly KeyWordService _keywordService = new KeyWordService();
         // GET: KeyWords
         public ActionResult Index()

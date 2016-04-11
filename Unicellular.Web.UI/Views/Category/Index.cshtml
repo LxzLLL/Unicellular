@@ -20,42 +20,36 @@
                 <h3 class="box-title">分类表单</h3>
             </div><!-- /.box-header -->
 
-            <div class="box-body">
-                <form id="Form" class="form-horizontal">
+            
+            <form id="Form" class="form-horizontal">
+                <div class="box-body">
                     <div class="form-group">
-                        <div class="row">
-                            <label for="CATEGORY_CODE" class="control-label col-sm-3">分类编码</label>
+                            <label for="CATEGORY_CODE" class="control-label col-sm-2">分类编码</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="CATEGORY_CODE" name="CATEGORY_CODE"
                                        placeholder="最大32个字符"
                                        data-bind="value:CATEGORY_CODE">
-                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="row" style="margin-top:10px;">
-                            <label for="CATEGORY_NAME" class="control-label col-sm-3">分类名称</label>
+                    <div class="form-group" style="margin-top:10px;">
+                            <label for="CATEGORY_NAME" class="control-label col-sm-2">分类名称</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="CATEGORY_NAME" name="CATEGORY_NAME"
                                        placeholder="最大64个字符"
                                        data-bind="value:CATEGORY_NAME">
-                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="row" style="margin-top:10px;">
-                            <label for="CATEGORY_DES" class="control-label col-sm-3">分类描述</label>
-                            <div class="col-sm-8">
-                                <textarea  class="form-control" id="CATEGORY_DES" name="CATEGORY_DES"
-                                       rows="4"
-                                       placeholder="最大256个字符"
-                                       data-bind="value:CATEGORY_DES">
-                                </textarea>
-                            </div>
+                    <div class="form-group" style="margin-top:10px;">
+                        <label for="CATEGORY_DES" class="control-label col-sm-2">分类描述</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" id="CATEGORY_DES" name="CATEGORY_DES"
+                                      rows="4"
+                                      placeholder="最大256个字符"
+                                      data-bind="value:CATEGORY_DES"></textarea>
                         </div>
                     </div>
                     <div class="row" style="margin-top:10px;">
-                        <div class="col-sm-4 col-sm-offset-4">
+                        <div class="col-sm-4 col-sm-offset-3">
                             <button id="btn_add" type="button" class="btn btn-default btn-sm">
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加子节点
                             </button>
@@ -67,8 +61,9 @@
                             </button>
                         </div>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
+            
         </div>
     </div>
 </div>

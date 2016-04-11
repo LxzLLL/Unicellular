@@ -119,8 +119,10 @@ function fn_load(id) {
         function (data, textStatus) {               //successFun
             //提示成功
             if (data) {
-                //ko.mapping.fromJS(ko.mapping.toJS(new formObj()), {}, formInstance);//必须使用，否则会出现绑定不上的问题
+                formValidator.resetForm(true);              //清空上次验证状态
+                ko.mapping.fromJS(ko.mapping.toJS(new formObj()), {}, formInstance);//必须使用，否则在清空验证后会出现绑定不上的问题
                 ko.mapping.fromJSON(JSON.stringify(data), {}, formInstance);
+                
             }
         });
 }
@@ -228,7 +230,6 @@ function fn_isSelected() {
 //树单击事件
 function fn_nodeSelected(event, treeId, treeNode) {
     fn_load(treeNode.ID);
-    alert(treeNode.tId + ", " + treeNode.CATEGORY_NAME + ", " + treeNode.ID + ", " + treeNode.PARENT_ID);
 }
 
 
