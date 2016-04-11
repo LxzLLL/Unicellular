@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
+using Dapper;
 using DapperExtensions;
 using Unicellular.Web.Entity.Ecommerce;
 using Unicellular.Web.Entity.System;
@@ -25,35 +27,20 @@ namespace Unicellular.Web.DAO.Ecommerce
             string orderby = string.Empty;
             if(sort!=null && sortOrder != null )
             {
-                orderby = "ORDER BY "+ sort+" "+ sortOrder;
+                orderby = "ORDER BY tkeywords." + sort+" "+ sortOrder;
             }
 
             string query = @"SELECT  tkeywords.*, tPlatType.DI_NAME AS PLAT_TYPE_NAME
                                         FROM T_EC_KeyWords AS tkeywords
                                         LEFT JOIN T_Sys_DictItem AS tPlatType 
                                         ON tkeywords.PLAT_TYPE=tPlatType.ID
-                                        {0}
                                         ";
-            query = string.Format( query, orderby );
-            var list = this.GetPage<T_EC_KeyWords>(pageNumber,pageSize,out number,query ).ToList();
-            return list;
-            ////创建谓词
-            ////IFieldPredicate predicate = null;
-            //PredicateGroup pg = PredicateFactory(keywordEntity);
+            DynamicParameters dp = new DynamicParameters();
+            query = Where( query, "tkeywords", ref dp, keywordEntity );
+            query += orderby;
 
-            //IList<ISort> sorts = new List<ISort>();
-            ////创建排序
-            //if ( sort == null )
-            //{
-            //    sorts.Add( new Sort { PropertyName = "PLAT_TYPE", Ascending = sortOrder == "asc" ? true : false } );
-            //    sorts.Add( new Sort { PropertyName = "GOODS_TYPE", Ascending = sortOrder == "asc" ? true : false } );
-            //}
-            //else
-            //{
-            //    sorts.Add( new Sort { PropertyName = sort, Ascending = sortOrder == "asc" ? true : false } );
-            //}
-            //List < T_Sys_DictItem > dictitems =this.GetPageList<T_Sys_DictItem>(pageNumber,pageSize,out number,pg,sorts).ToList();
-            //return dictitems;
+            var list = this.GetPage<T_EC_KeyWords>(pageNumber,pageSize,out number,query,dp ).ToList();
+            return list;
         }
         #endregion
 
@@ -150,6 +137,116 @@ namespace Unicellular.Web.DAO.Ecommerce
 
             predicateGroup = new PredicateGroup { Operator = GroupOperator.And, Predicates = predicates };
             return predicateGroup;
+        }
+        #endregion
+
+        #region dapper动态where（全部and）
+        public string Where(string sSql,string primaryTableName, ref DynamicParameters p,T_EC_KeyWords keywordEntity )
+        {
+            StringBuilder sb = new StringBuilder();
+            if(string.IsNullOrEmpty(sSql) || keywordEntity == null )
+            {
+                sb.ToString();
+            }
+            //主表名
+            string stn = string.Empty;
+            if ( !string.IsNullOrEmpty( primaryTableName ) )
+            {
+                stn = primaryTableName + ".";
+            }
+            sb.Append( sSql+" where 1=1 " );
+            //ID
+            if ( !string.IsNullOrEmpty( keywordEntity.ID ) && !string.IsNullOrEmpty( keywordEntity.ID.Trim() ) )
+            {
+                sb.Append( " and "+ stn + "ID = @ID" );
+                p.Add( "ID", keywordEntity.ID );
+            }
+            //PLAT_TYPE
+            if ( !string.IsNullOrEmpty( keywordEntity.PLAT_TYPE ) && !string.IsNullOrEmpty( keywordEntity.PLAT_TYPE.Trim() ) )
+            {
+                sb.Append( " and " + stn + "PLAT_TYPE = @PLAT_TYPE" );
+                p.Add( "PLAT_TYPE", keywordEntity.PLAT_TYPE );
+            }
+            //KEYWORD_TYPE
+            if ( !string.IsNullOrEmpty( keywordEntity.KEYWORD_TYPE ) && !string.IsNullOrEmpty( keywordEntity.KEYWORD_TYPE.Trim() ) )
+            {
+                sb.Append( " and " + stn + "KEYWORD_TYPE = @KEYWORD_TYPE" );
+                p.Add( "KEYWORD_TYPE", keywordEntity.KEYWORD_TYPE );
+            }
+            //GOODS_TYPE
+            if ( !string.IsNullOrEmpty( keywordEntity.GOODS_TYPE ) && !string.IsNullOrEmpty( keywordEntity.GOODS_TYPE.Trim() ) )
+            {
+                sb.Append( " and " + stn + "GOODS_TYPE = @GOODS_TYPE" );
+                p.Add( "GOODS_TYPE", keywordEntity.GOODS_TYPE );
+            }
+            //KEY_WORD
+            if ( !string.IsNullOrEmpty( keywordEntity.KEY_WORD ) && !string.IsNullOrEmpty( keywordEntity.KEY_WORD.Trim() ) )
+            {
+                sb.Append( " and " + stn + "KEY_WORD like @KEY_WORD" );
+                p.Add( "KEY_WORD", "%"+keywordEntity.KEY_WORD+"%" );
+            }
+            //KW_CN
+            if ( !string.IsNullOrEmpty( keywordEntity.KW_CN ) && !string.IsNullOrEmpty( keywordEntity.KW_CN.Trim() ) )
+            {
+                sb.Append( " and " + stn + "KW_CN = @KW_CN" );
+                p.Add( "KW_CN", keywordEntity.KW_CN );
+            }
+            //KW_DES
+            if ( !string.IsNullOrEmpty( keywordEntity.KW_DES ) && !string.IsNullOrEmpty( keywordEntity.KW_DES.Trim() ) )
+            {
+                sb.Append( " and " + stn + "KW_DES = @KW_DES" );
+                p.Add( "KW_DES", keywordEntity.KW_DES );
+            }
+            //KW_VOLUME
+            if ( keywordEntity.KW_VOLUME != null )
+            {
+                sb.Append( " and " + stn + "KW_VOLUME = @KW_VOLUME" );
+                p.Add( "KW_VOLUME", keywordEntity.KW_VOLUME );
+            }
+            //C_DATA_TIME
+            if ( keywordEntity.C_DATA_TIME != null )
+            {
+                sb.Append( " and " + stn + "C_DATA_TIME = @C_DATA_TIME" );
+                p.Add( "C_DATA_TIME", keywordEntity.C_DATA_TIME );
+            }
+            //C_DATA_UID
+            if ( !string.IsNullOrEmpty( keywordEntity.C_DATA_UID ) && !string.IsNullOrEmpty( keywordEntity.C_DATA_UID.Trim() ) )
+            {
+                sb.Append( " and " + stn + "C_DATA_UID = @C_DATA_UID" );
+                p.Add( "C_DATA_UID", keywordEntity.C_DATA_UID );
+            }
+            //U_DATA_TIME
+            if ( keywordEntity.U_DATA_TIME != null )
+            {
+                sb.Append( " and " + stn + "U_DATA_TIME = @U_DATA_TIME" );
+                p.Add( "U_DATA_TIME", keywordEntity.U_DATA_TIME );
+            }
+            //U_DATA_UID
+            if ( !string.IsNullOrEmpty( keywordEntity.U_DATA_UID ) && !string.IsNullOrEmpty( keywordEntity.U_DATA_UID.Trim() ) )
+            {
+                sb.Append( " and " + stn + "U_DATA_UID = @U_DATA_UID" );
+                p.Add( "U_DATA_UID", keywordEntity.U_DATA_UID );
+            }
+
+            //RESERVE1
+            if ( !string.IsNullOrEmpty( keywordEntity.RESERVE1 ) && !string.IsNullOrEmpty( keywordEntity.RESERVE1.Trim() ) )
+            {
+                sb.Append( " and " + stn + "RESERVE1 = @RESERVE1" );
+                p.Add( "RESERVE1", keywordEntity.RESERVE1 );
+            }
+            //RESERVE2
+            if ( !string.IsNullOrEmpty( keywordEntity.RESERVE2 ) && !string.IsNullOrEmpty( keywordEntity.RESERVE2.Trim() ) )
+            {
+                sb.Append( " and " + stn + "RESERVE2 = @RESERVE2" );
+                p.Add( "RESERVE2", keywordEntity.RESERVE2 );
+            }
+            //RESERVE3
+            if ( !string.IsNullOrEmpty( keywordEntity.RESERVE3 ) && !string.IsNullOrEmpty( keywordEntity.RESERVE3.Trim() ) )
+            {
+                sb.Append( " and " + stn + "RESERVE3 = @RESERVE3" );
+                p.Add( "RESERVE3", keywordEntity.RESERVE3 );
+            }
+            return sb.ToString();
         }
         #endregion
     }

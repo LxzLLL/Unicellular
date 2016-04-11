@@ -335,7 +335,7 @@ var XLBase = null;
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     //返回失败提示
-                    toastr.error(textStatus, "异常");
+                    toastr.error(XMLHttpRequest.statusText, "异常");
                 }
             });
         }

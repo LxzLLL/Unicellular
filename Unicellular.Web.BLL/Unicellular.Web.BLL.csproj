@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ecommerce\CategoryService.cs" />
     <Compile Include="Ecommerce\KeyWordService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\SysDictService.cs" />

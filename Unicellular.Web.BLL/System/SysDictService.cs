@@ -264,7 +264,15 @@ namespace Unicellular.Web.BLL.System
                 me.MsgDes = "字典项编码重复";
                 return me;
             }
-            dynamic result = dao.Insert<T_Sys_DictItem>( dictItem );
+            dynamic result = null;
+            try
+            {
+                result = dao.Insert<T_Sys_DictItem>( dictItem );
+            }
+            catch(Exception ex )
+            {
+                throw ex;
+            }
             if ( result != null )
             {
                 me.MsgCode = MsgEntity.MsgCodeEnum.Success;
@@ -357,7 +365,16 @@ namespace Unicellular.Web.BLL.System
             }
             IList<ISort> sorts = new List<ISort>();
             sorts.Add( new Sort { PropertyName = "DI_NAME", Ascending = true } );
-            return dao.GetList<T_Sys_DictItem>( dictItem, sorts ).ToList();
+            try
+            {
+                dictitems = dao.GetList<T_Sys_DictItem>( dictItem, sorts ).ToList();
+            }
+            catch(Exception ex )
+            {
+
+            }
+            
+            return dictitems;
         }
 
         #endregion

@@ -48,6 +48,25 @@ namespace Unicellular.Web.Entity.Ecommerce
         }
 
         /// <summary>
+        ///父ID，如果是根节点，则为0
+        /// </summary>
+        public string PARENT_ID
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        ///分类描述
+        /// </summary>
+        public string CATEGORY_DES
+        {
+            get;
+            set;
+        }
+
+
+        /// <summary>
         ///此条数据创建日期
         /// </summary>
         public DateTime? C_DATA_TIME
@@ -110,23 +129,7 @@ namespace Unicellular.Web.Entity.Ecommerce
             set;
         }
 
-        /// <summary>
-        ///父ID，如果是根节点，则为0
-        /// </summary>
-        public string PARENT_ID
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        ///分类描述
-        /// </summary>
-        public string CATEGORY_DES
-        {
-            get;
-            set;
-        }
+        
     }
 
 }

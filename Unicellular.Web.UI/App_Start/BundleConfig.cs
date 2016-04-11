@@ -102,6 +102,17 @@ namespace Unicellular.Web.UI
                 ) );
             #endregion
 
+            #region jquery-ztree的资源引用
+            //样式
+            bundles.Add( new StyleBundle( "~/Content/ztreecss" ).Include(
+                      "~/Content/zTree.css"
+                      ) );
+            //js
+            bundles.Add( new ScriptBundle( "~/bundles/ztreejs" ).Include(
+                       "~/Scripts/jquery.ztree.all-3.5.js"
+                       ) );
+            #endregion
+
         }
     }
 }
