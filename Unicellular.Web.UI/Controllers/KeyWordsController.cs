@@ -23,7 +23,6 @@ namespace Unicellular.Web.UI.Controllers
         {
             ViewBag.PlatType = _dictService.GetSelectListItemByObj( new { DICT_CODE = "PLAT_TYPE" } );
             ViewBag.KeyWordType = _dictService.GetSelectListItemByObj( new { DICT_CODE = "KEYWORD_TYPE" } );
-            ViewBag.GoodsType = _dictService.GetSelectListItemByObj( new { DICT_CODE = "GOODS_TYPE" } );
             return View();
         }       
          
@@ -42,5 +41,54 @@ namespace Unicellular.Web.UI.Controllers
             List<T_EC_KeyWords> keywords = _keywordService.GetKeyWordsPages(pageNumber,pageSize,out number,sort,sortOrder,keywordModel);
             return this.Json( new { total = number, rows = keywords }, JsonRequestBehavior.AllowGet );
         }
+
+
+        /// <summary>
+        /// 获取实体数据
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public JsonResult Get( string ID )
+        {
+            T_EC_KeyWords keyword = _keywordService.Get(ID);
+            return Json( keyword, JsonRequestBehavior.AllowGet );
+        }
+
+        ///// <summary>
+        ///// 添加分类
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public JsonResult Add( T_EC_KeyWords category )
+        //{
+        //    category.ID = RandomHelper.GetUUID();
+        //    MsgEntity me = _categoryService.Add(category);
+        //    return Json( me, JsonRequestBehavior.AllowGet );
+        //}
+
+
+        ///// <summary>
+        ///// 编辑分类
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public JsonResult Edit( T_EC_KWCategory category )
+        //{
+        //    MsgEntity me = _categoryService.Edit(category);
+        //    return Json( me, JsonRequestBehavior.AllowGet );
+        //}
+
+
+        ///// <summary>
+        ///// 删除分类
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public JsonResult Del( string ID )
+        //{
+        //    MsgEntity me = _categoryService.Delete(ID);
+        //    return Json( me, JsonRequestBehavior.AllowGet );
+        //}
+
     }
 }

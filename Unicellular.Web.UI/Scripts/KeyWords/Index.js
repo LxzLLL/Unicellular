@@ -1,6 +1,10 @@
 ﻿
 var gridKeyWord = null;
 var formKeyWordValidator = null;
+
+var treeSearch = null;
+var treeForm = null;
+
 //表单的knockout 对象
 var formObj = function(){
     var self = this;
@@ -12,8 +16,31 @@ var formObj = function(){
     self.KW_CN = ko.observable();
     self.KW_DES = ko.observable();
     self.KW_VOLUME = ko.observable();
+    //后台数据赋值后，绑定到tree并触发此节点的点击事件
+    self.setTreeGoodsType = function (treeObj) {
+        var nodes = treeObj.getNodesByParam("ID", this.GOODS_TYPE(), null);
+        if (nodes && node.length > 0) {
+            var parentNode = nodes[0].getParentNode();
+            treeObj.expandNode(parentNode, true);
+            //选中节点
+            treeObj.selectNode(nodes[0]);
+            //模拟点击
+            $("#" + nodes[0].tId + "_a").click();
+        }
+        
+    };
+}
+//to model忽略的属性
+var ignorMapping = {
+    'ignore': ["setTreeGoodsType"]
 }
 var formInstance = new formObj();
+
+//重绘
+$(window).resize(function () {
+    resizeMenu("#GoodsTypeSearch", "#divSearchTree");
+    resizeMenu("#GOODS_TYPE", "#divFormTree");
+});
 
 
 $(function () {
@@ -22,6 +49,17 @@ $(function () {
     initGrid();
     //初始化Button的点击事件
     initButton();
+
+    //初始化input tree单击事件
+    $("#GoodsTypeSearch").bind("click", {}, function () {
+        showMenu("#GoodsTypeSearch", "#divSearchTree");
+    });
+    $("#GOODS_TYPE").bind("click", {}, function () {
+        showMenu("#GOODS_TYPE", "#divFormTree");
+    });
+
+    //初始化界面中的“关键词分类”树
+    initTree();
 
     ////初始化验证
     initValidate();
@@ -77,12 +115,21 @@ function initGrid() {
         onClickRow: function (row, $element) {
             $('#table_keyword .success').removeClass('success');
             $('#table_keyword').find($element).addClass('success');
+            //加载表单
+            fn_load(row.ID);
         }
     });
 }
 
 //表格查询的参数
 function keywordParams(params) {
+    //搜索栏中的关键词分类
+    var goodsTypeVal = null;
+    var nodes = treeSearch.getSelectedNodes();
+    if (nodes && nodes.length > 0) {
+        goodsTypeVal = nodes[0].ID;
+    }
+
     var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
         pageNumber: params.pageNumber,   //页码
         pageSize: params.limit,                     //页面大小
@@ -90,7 +137,7 @@ function keywordParams(params) {
         sortOrder: params.order,                 //排位命令（desc，asc）
         PLAT_TYPE:$("#PlatTypeSearch").val(),
         KEYWORD_TYPE:$("#KeyWordTypeSearch").val(),
-        GOODS_TYPE:$("#GoodsTypeSearch").val(),
+        GOODS_TYPE: goodsTypeVal,
         KEY_WORD: $("#KeyWordSearch").val()
         //search: params.search,                      //搜索文本
         //DICT_ID: dictId
@@ -108,6 +155,25 @@ function initButton() {
 }
 
 
+
+//根据id获取树数据
+function fn_load(id) {
+    //ajax post
+    XLBase.ajaxBackJson(
+        "KeyWords/Get",                 //url
+        "GET",                             //method
+        { ID: id },                //dataJson
+        function (data, textStatus) {               //successFun
+            //提示成功
+            if (data) {
+                formValidator.resetForm(true);              //清空上次验证状态
+                //必须使用，否则在清空验证后会出现绑定不上的问题
+                ko.mapping.fromJS(ko.mapping.toJS(new formObj()), {}, formInstance);
+                ko.mapping.fromJSON(JSON.stringify(data), {}, formInstance);
+                
+            }
+        });
+}
 
 //添加
 function fn_addKWItem() {
@@ -180,6 +246,89 @@ function initValidate() {
             }
         }
     });
+}
+
+//----------------树操作-------------------//
+
+//初始化界面中的“关键词分类”树
+function initTree() {
+    var settingObj = function(setparam){
+        var setting = {
+            view: {
+                showLine: true,
+                selectedMulti: false
+            },
+            data: {
+                key: {
+                    name: "CATEGORY_NAME"
+                },
+                simpleData: {
+                    enable: true,
+                    idKey: "ID",
+                    pIdKey: "PARENT_ID",
+                    rootPId: "0"
+                }
+            }
+        };
+        return $.extend(setting, setparam);
+    };
+    var settingSearch = settingObj({ callback: { onClick: fn_treeSearchClick } });
+    var settingForm = settingObj({ callback: { onClick: fn_treeFormClick } });
+    //初始化树
+    XLBase.ajaxBackJson(
+        "Category/GetTree",                                                     //url
+        "GET",                                                                  //method
+        null,                                                        //dataJson
+        function (data, textStatus) {                   //successFun
+            treeSearch = $.fn.zTree.init($("#treeSearch"), settingSearch, data);
+            treeForm = $.fn.zTree.init($("#treeForm"), settingForm, data);
+        });
+}
+//搜索中的“关键词分类”树 点击事件
+function fn_treeSearchClick(event, treeId, treeNode) {
+    $("#GoodsTypeSearch").val(treeNode.CATEGORY_NAME);
+}
+//表单中的“关键词分类”树 点击事件
+function fn_treeFormClick(event, treeId, treeNode) {
+    //formKeyWordValidator.updateStatus("GOODS_TYPE", "NOT_VALIDATED", null);
+    $("#GOODS_TYPE").val(treeNode.CATEGORY_NAME);
+    if ($("#GOODS_TYPE").val()) {
+        formKeyWordValidator.updateStatus("GOODS_TYPE", "VALID", null);
+    }
+    //formKeyWordValidator.validateField("GOODS_TYPE");
+}
+
+
+function showMenu(inputId, divTreeId) {
+    //var obj = $(inputId);
+    //var offset = obj.offset();
+    //$(divTreeId).css({ left: offset.left + "px", top: offset.top + obj.outerHeight() + "px" }).slideDown("fast");
+    resizeMenu(inputId, divTreeId);
+    $(divTreeId).slideDown("fast");
+    $("body").bind("mousedown", onBodyDown);
+}
+function resizeMenu(inputId, divTreeId) {
+    var obj = $(inputId);
+    var offset = obj.offset();
+    $(divTreeId).css({ left: offset.left + "px", top: offset.top + obj.outerHeight() + "px" });
+}
+
+function hideMenu() {
+    $("#divSearchTree").fadeOut("fast");
+    $("#divFormTree").fadeOut("fast");
+    $("body").unbind("mousedown", onBodyDown);
+}
+function onBodyDown(event) {
+    if (!(event.target.id == "GoodsTypeSearch" ||
+        event.target.id == "GOODS_TYPE" ||
+        event.target.id == "treeSearch" ||
+        event.target.id == "treeForm" ||
+        event.target.id == "divSearchTree" ||
+        event.target.id == "divFormTree" ||
+        $(event.target).parents("#divSearchTree").length > 0 ||
+        $(event.target).parents("#divFormTree").length > 0)) {
+        hideMenu();
+    }
 }
 
 
