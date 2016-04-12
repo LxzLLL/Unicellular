@@ -87,13 +87,14 @@
                         <div class="form-group">
                             @Html.LabelFor( m => m.PLAT_TYPE, new { @class = "control-label  col-sm-2" } )
                             <div class="col-sm-8">
-                                @Html.DropDownListFor( m => m.PLAT_TYPE, ViewBag.PlatType as List<SelectListItem>, "--请选择--", new { @class = "form-control" } )
+                                @Html.DropDownListFor( m => m.PLAT_TYPE, ViewBag.PlatType as List<SelectListItem>, "--请选择--",
+                               new { @class = "form-control", data_bind = "value:PLAT_TYPE" } )
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor( m => m.KEYWORD_TYPE, new { @class = "control-label  col-sm-2" } )
                             <div class="col-sm-8">
-                                @Html.DropDownListFor( m => m.KEYWORD_TYPE, ViewBag.KeyWordType as List<SelectListItem>, "--请选择--", new { @class = "form-control" } )
+                                @Html.DropDownListFor( m => m.KEYWORD_TYPE, ViewBag.KeyWordType as List<SelectListItem>, "--请选择--", new { @class = "form-control", data_bind = "value:KEYWORD_TYPE" } )
                             </div>
                         </div>
                         <div class="form-group">
@@ -105,25 +106,25 @@
                         <div class="form-group">
                             @Html.LabelFor( m => m.KEY_WORD, new { @class = "control-label  col-sm-2" } )
                             <div class="col-sm-8">
-                                @Html.TextBoxFor( m => m.KEY_WORD, new { @class = "form-control", @placeholder = "不能超过80个字符" } )
+                                @Html.TextBoxFor( m => m.KEY_WORD, new { @class = "form-control", @placeholder = "不能超过80个字符", data_bind = "value:KEY_WORD" } )
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor( m => m.KW_VOLUME, new { @class = "control-label  col-sm-2" } )
                             <div class="col-sm-8">
-                                @Html.TextBoxFor( m => m.KW_VOLUME, new { @class = "form-control", @placeholder = "不能为空" } )
+                                @Html.TextBoxFor( m => m.KW_VOLUME, new { @class = "form-control", @placeholder = "不能为空", data_bind = "value:KW_VOLUME" } )
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor( m => m.KW_CN, new { @class = "control-label  col-sm-2" } )
                             <div class="col-sm-8">
-                                @Html.TextBoxFor( m => m.KW_CN, new { @class = "form-control", @placeholder = "不能超过128个字符" } )
+                                @Html.TextBoxFor( m => m.KW_CN, new { @class = "form-control", @placeholder = "不能超过128个字符", data_bind = "value:KW_CN" } )
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor( m => m.KW_DES, new { @class = "control-label  col-sm-2" } )
                             <div class="col-sm-8">
-                                @Html.TextAreaFor( m => m.KW_DES, new { @class = "form-control", @placeholder = "不能超过2048个字符", @rows = 4 } )
+                                @Html.TextAreaFor( m => m.KW_DES, new { @class = "form-control", @placeholder = "不能超过2048个字符", @rows = 4, data_bind = "value:KW_DES" } )
                             </div>
                         </div>
 

@@ -1,6 +1,6 @@
 ﻿
 var gridKeyWord = null;
-var formKeyWordValidator = null;
+var formValidator = null;
 
 var treeSearch = null;
 var treeForm = null;
@@ -19,7 +19,7 @@ var formObj = function(){
     //后台数据赋值后，绑定到tree并触发此节点的点击事件
     self.setTreeGoodsType = function (treeObj) {
         var nodes = treeObj.getNodesByParam("ID", this.GOODS_TYPE(), null);
-        if (nodes && node.length > 0) {
+        if (nodes && nodes.length > 0) {
             var parentNode = nodes[0].getParentNode();
             treeObj.expandNode(parentNode, true);
             //选中节点
@@ -44,7 +44,8 @@ $(window).resize(function () {
 
 
 $(function () {
-    
+    //初始化界面中的“关键词分类”树
+    initTree();
     //初始化Table
     initGrid();
     //初始化Button的点击事件
@@ -58,13 +59,10 @@ $(function () {
         showMenu("#GOODS_TYPE", "#divFormTree");
     });
 
-    //初始化界面中的“关键词分类”树
-    initTree();
-
     ////初始化验证
     initValidate();
     ////获取验证插件实例
-    formKeyWordValidator = $("#keywordForm").data('bootstrapValidator');
+    formValidator = $("#keywordForm").data('bootstrapValidator');
 
     //knockoutjs绑定数据
     BindKoData();
@@ -104,7 +102,7 @@ function initGrid() {
             title: '关键词',
             sortable: true
         }, {
-            field: 'GOODS_TYPE_NAME',
+            field: 'CATEGORY_NAME',
             title: '分类',
             sortable: true
         } ,{
@@ -166,11 +164,13 @@ function fn_load(id) {
         function (data, textStatus) {               //successFun
             //提示成功
             if (data) {
-                formValidator.resetForm(true);              //清空上次验证状态
+                
                 //必须使用，否则在清空验证后会出现绑定不上的问题
                 ko.mapping.fromJS(ko.mapping.toJS(new formObj()), {}, formInstance);
                 ko.mapping.fromJSON(JSON.stringify(data), {}, formInstance);
-                
+                //更新表单tree
+                formInstance.setTreeGoodsType(treeForm);
+                formValidator.resetForm();              //清空上次验证状态
             }
         });
 }
@@ -178,14 +178,97 @@ function fn_load(id) {
 //添加
 function fn_addKWItem() {
 
+    formValidator.validate();
+    if (!formValidator.isValid()) {
+        return;
+    }
+    debugger;
+    //form的json化
+    //更新表单tree
+    //formInstance.setTreeGoodsType(treeForm);
+    formInstance.GOODS_TYPE(treeForm.getSelectedNodes()[0].ID);
+    var objJson = ko.mapping.toJSON(formInstance, ignorMapping);
+    //ajax post
+    XLBase.ajaxBackJson(
+        "KeyWords/Add",                 //url
+        "POST",                             //method
+        JSON.parse(objJson),                //dataJson
+        function (data, textStatus) {               //successFun
+            //提示成功
+            if (data.MsgCode == 0) {
+                toastr.success(data.MsgDes, "成功");
+                //更新表格
+                $('#table_keyword').bootstrapTable('refresh');
+            }
+            else {
+                //提示失败
+                toastr.error(data.MsgDes, "失败");
+            }
+        });
 }
 //编辑
 function fn_editKWItem() {
+    var selectedRow = fn_rowSelected();
+    if (!selectedRow || !selectedRow.ID) {
+        toastr.warning("未选择关键词", "警告");
+        return;
+    }
 
+    formValidator.validate();
+    if (!formValidator.isValid()) {
+        return;
+    }
+    //form的json化
+    var objJson = ko.mapping.toJSON(formInstance,ignorMapping);
+    //ajax post
+    XLBase.ajaxBackJson(
+        "KeyWords/Edit",                 //url
+        "POST",                             //method
+        JSON.parse(objJson),                //dataJson
+        function (data, textStatus) {               //successFun
+            //提示成功
+            if (data.MsgCode == 0) {
+                toastr.success(data.MsgDes, "成功");
+                //更新表格
+                $('#table_keyword').bootstrapTable('refresh');
+            }
+            else {
+                //提示失败
+                toastr.error(data.MsgDes, "失败");
+            }
+        });
 }
 //删除
 function fn_delKWItem() {
+    var selectedRow = fn_rowSelected();
+    if (!selectedRow || !selectedRow.ID) {
+        toastr.warning("未选择关键词", "警告");
+        return;
+    }
+    //ajax post
+    XLBase.ajaxBackJson(
+        "Category/Del",                 //url
+        "POST",                             //method
+        { ID: selectedRow.ID },                //dataJson
+        function (data, textStatus) {               //successFun
+            //提示成功
+            if (data.MsgCode == 0) {
+                toastr.success(data.MsgDes, "成功");
+                //更新表格
+                $('#table_keyword').bootstrapTable('refresh');
+            }
+            else {
+                //提示失败
+                toastr.error(data.MsgDes, "失败");
+            }
+        });
+}
 
+//获取d表格选择的id，并弹出提示框
+function fn_rowSelected() {
+    var index = $('#table_keyword').find('tr.success').data('index');
+    var selRow = $('#table_keyword').bootstrapTable('getData')[index];
+    return selRow;
 }
 
 //查询
@@ -290,12 +373,12 @@ function fn_treeSearchClick(event, treeId, treeNode) {
 }
 //表单中的“关键词分类”树 点击事件
 function fn_treeFormClick(event, treeId, treeNode) {
-    //formKeyWordValidator.updateStatus("GOODS_TYPE", "NOT_VALIDATED", null);
+    //formValidator.updateStatus("GOODS_TYPE", "NOT_VALIDATED", null);
     $("#GOODS_TYPE").val(treeNode.CATEGORY_NAME);
     if ($("#GOODS_TYPE").val()) {
-        formKeyWordValidator.updateStatus("GOODS_TYPE", "VALID", null);
+        formValidator.updateStatus("GOODS_TYPE", "VALID", null);
     }
-    //formKeyWordValidator.validateField("GOODS_TYPE");
+    //formValidator.validateField("GOODS_TYPE");
 }
 
 

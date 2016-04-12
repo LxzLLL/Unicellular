@@ -8,9 +8,8 @@ using System.Web.Mvc;
 using Unicellular.Web.BLL.System;
 using Unicellular.Web.BLL.Ecommerce;
 using Unicellular.Web.Entity.Ecommerce;
-using Unicellular.Web.Entity.System;
-using Unicellular.Web.UI.ViewModels.Ecommerce;
-
+using Unicellular.Web.Entity;
+using XLToolLibrary.Utilities;
 namespace Unicellular.Web.UI.Controllers
 {
     public class KeyWordsController : Controller
@@ -54,41 +53,41 @@ namespace Unicellular.Web.UI.Controllers
             return Json( keyword, JsonRequestBehavior.AllowGet );
         }
 
-        ///// <summary>
-        ///// 添加分类
-        ///// </summary>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public JsonResult Add( T_EC_KeyWords category )
-        //{
-        //    category.ID = RandomHelper.GetUUID();
-        //    MsgEntity me = _categoryService.Add(category);
-        //    return Json( me, JsonRequestBehavior.AllowGet );
-        //}
+        /// <summary>
+        /// 添加分类
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult Add( T_EC_KeyWords keyword )
+        {
+            keyword.ID = RandomHelper.GetUUID();
+            MsgEntity me = _keywordService.Add(keyword);
+            return Json( me, JsonRequestBehavior.AllowGet );
+        }
 
 
-        ///// <summary>
-        ///// 编辑分类
-        ///// </summary>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public JsonResult Edit( T_EC_KWCategory category )
-        //{
-        //    MsgEntity me = _categoryService.Edit(category);
-        //    return Json( me, JsonRequestBehavior.AllowGet );
-        //}
+        /// <summary>
+        /// 编辑分类
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult Edit( T_EC_KeyWords keyword )
+        {
+            MsgEntity me = _keywordService.Edit(keyword);
+            return Json( me, JsonRequestBehavior.AllowGet );
+        }
 
 
-        ///// <summary>
-        ///// 删除分类
-        ///// </summary>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public JsonResult Del( string ID )
-        //{
-        //    MsgEntity me = _categoryService.Delete(ID);
-        //    return Json( me, JsonRequestBehavior.AllowGet );
-        //}
+        /// <summary>
+        /// 删除分类
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult Del( string ID )
+        {
+            MsgEntity me = _keywordService.Delete(ID);
+            return Json( me, JsonRequestBehavior.AllowGet );
+        }
 
     }
 }

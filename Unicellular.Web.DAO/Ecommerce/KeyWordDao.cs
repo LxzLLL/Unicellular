@@ -30,10 +30,14 @@ namespace Unicellular.Web.DAO.Ecommerce
                 orderby = "ORDER BY tkeywords." + sort+" "+ sortOrder;
             }
 
-            string query = @"SELECT  tkeywords.*, tPlatType.DI_NAME AS PLAT_TYPE_NAME
+            string query = @"SELECT  tkeywords.*, 
+                                        tPlatType.DI_NAME AS PLAT_TYPE_NAME,
+                                        tcategory.CATEGORY_NAME AS CATEGORY_NAME
                                         FROM T_EC_KeyWords AS tkeywords
                                         LEFT JOIN T_Sys_DictItem AS tPlatType 
                                         ON tkeywords.PLAT_TYPE=tPlatType.ID
+                                        LEFT JOIN T_EC_KWCategory AS tcategory
+                                        ON tkeywords.GOODS_TYPE = tcategory.ID
                                         ";
             DynamicParameters dp = new DynamicParameters();
             query = Where( query, "tkeywords", ref dp, keywordEntity );

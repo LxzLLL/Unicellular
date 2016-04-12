@@ -57,7 +57,10 @@ namespace Unicellular.Web.Entity.Ecommerce
             get;
             set;
         }
-
+        /// <summary>
+        /// 分类名称
+        /// </summary>
+        public string CATEGORY_NAME { get; set; }
         /// <summary>
         ///关键词
         /// </summary>
@@ -166,9 +169,10 @@ namespace Unicellular.Web.Entity.Ecommerce
         /// </summary>
         public T_EC_KeyWordsEntity()
         {
-            base.Table( "TECKeyWords" );
+            base.Table( "T_EC_KeyWords" );
             Map( f => f.PLAT_TYPE_NAME ).Ignore();
             Map( f => f.KEYWORD_TYPE_NAME ).Ignore();
+            Map( f => f.CATEGORY_NAME ).Ignore();
             AutoMap();
         }
     }
