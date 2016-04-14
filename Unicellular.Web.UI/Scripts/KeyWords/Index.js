@@ -353,7 +353,7 @@ function initTree() {
                 }
             }
         };
-        return $.extend(setting, setparam);
+        return $.extend({},setting, setparam);
     };
     var settingSearch = settingObj({ callback: { onClick: fn_treeSearchClick } });
     var settingForm = settingObj({ callback: { onClick: fn_treeFormClick } });
