@@ -131,8 +131,8 @@ function keywordParams(params) {
     var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
         pageNumber: params.pageNumber,   //页码
         pageSize: params.limit,                     //页面大小
-        sort: params.sort,                             //排序列名
-        sortOrder: params.order,                 //排位命令（desc，asc）
+        sort: null,                             //排序列名
+        sortOrder: null,                 //排位命令（desc，asc）
         PLAT_TYPE:$("#PlatTypeSearch").val(),
         KEYWORD_TYPE:$("#KeyWordTypeSearch").val(),
         GOODS_TYPE: goodsTypeVal,
@@ -247,7 +247,7 @@ function fn_delKWItem() {
     }
     //ajax post
     XLBase.ajaxBackJson(
-        "Category/Del",                 //url
+        "KeyWords/Del",                 //url
         "POST",                             //method
         { ID: selectedRow.ID },                //dataJson
         function (data, textStatus) {               //successFun
