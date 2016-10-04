@@ -348,13 +348,13 @@ var XLBase = null;
  * @author Arvin
  *  Jquery扩展
  */
-(function ($) {
+(function($) {
     //将表单转化成Json对象
-    $.fn.serializeJson = function () {
+    $.fn.serializeJson = function() {
         var serializeObj = {};
         var array = this.serializeArray();
         var str = this.serialize();
-        $(array).each(function () {
+        $(array).each(function() {
             if (serializeObj[this.name]) {
                 if ($.isArray(serializeObj[this.name])) {
                     serializeObj[this.name].push(this.value);
@@ -368,7 +368,7 @@ var XLBase = null;
         return serializeObj;
     };
     //console.log($(this).serializeJson());
-})(jQuery)
+})(jQuery);
 
 
 
