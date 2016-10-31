@@ -12,7 +12,15 @@ namespace Unicellular.DataAccess
         private IDbTransaction _transaction;
         private readonly DatabaseType _databaseType;
         private readonly string _connKey;
-        
+
+
+        public DBSessionBase( IDatabase Database )
+        {
+            _connection = Database.Connection;
+            _databaseType = Database.DatabaseType;
+            _connKey = Database.ConnKey;
+        }
+
         public DatabaseType DatabaseType
         {
             get { return _databaseType; }
@@ -39,12 +47,7 @@ namespace Unicellular.DataAccess
             get { return _transaction; }
         }
 
-        public DBSessionBase(IDatabase Database)
-        {
-            _connection = Database.Connection;
-            _databaseType = Database.DatabaseType;
-            _connKey = Database.ConnKey;
-        }
+       
 
         /// <summary>
         /// 开启会话
